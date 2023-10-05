@@ -14,7 +14,7 @@
                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Component id="lblALtaAlumno" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblAltaAlumno" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="PanelAddAlumno" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
@@ -43,7 +43,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Component id="lblALtaAlumno" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAltaAlumno" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="PanelAddAlumno" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -67,7 +67,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lblALtaAlumno">
+        <Component class="javax.swing.JLabel" name="lblAltaAlumno">
           <Properties>
             <Property name="text" type="java.lang.String" value="ALTA ALUMNOS"/>
           </Properties>

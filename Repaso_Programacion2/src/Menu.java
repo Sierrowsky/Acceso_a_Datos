@@ -26,7 +26,7 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         PanelAlumos = new javax.swing.JDialog();
-        lblALtaAlumno = new javax.swing.JLabel();
+        lblAltaAlumno = new javax.swing.JLabel();
         btnLimpiarAlumno = new javax.swing.JButton();
         PanelAddAlumno = new javax.swing.JPanel();
         lblNombre = new javax.swing.JLabel();
@@ -78,7 +78,7 @@ public class Menu extends javax.swing.JFrame {
         miGuardaModulo = new javax.swing.JMenuItem();
         miSalvarModulo = new javax.swing.JMenuItem();
 
-        lblALtaAlumno.setText("ALTA ALUMNOS");
+        lblAltaAlumno.setText("ALTA ALUMNOS");
 
         btnLimpiarAlumno.setText("Limpiar");
 
@@ -145,7 +145,7 @@ public class Menu extends javax.swing.JFrame {
                         .addGap(9, 9, 9)
                         .addGroup(PanelAlumosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(PanelAlumosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblALtaAlumno)
+                                .addComponent(lblAltaAlumno)
                                 .addComponent(PanelAddAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(PanelAlumosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(spMostrarModulos, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,7 +165,7 @@ public class Menu extends javax.swing.JFrame {
             PanelAlumosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelAlumosLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(lblALtaAlumno)
+                .addComponent(lblAltaAlumno)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PanelAddAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -568,7 +568,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton btnVerAlumno;
     private javax.swing.JComboBox<String> combModulos;
     private javax.swing.JList<String> lModulos;
-    private javax.swing.JLabel lblALtaAlumno;
+    private javax.swing.JLabel lblAltaAlumno;
     private javax.swing.JLabel lblAltaModulo;
     private javax.swing.JLabel lblBuscarAlumno;
     private javax.swing.JLabel lblDatosHoras;
