@@ -1,5 +1,7 @@
 package AcademiaMas;
 
+import java.util.ArrayList;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -10,12 +12,33 @@ package AcademiaMas;
  * @author a21pablosp
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-
+    private ArrayList<Alumno> listaAlumnos;
+    private ArrayList<Modulo> listaModulos;
     /**
      * Creates new form Menu
      */
     public MenuPrincipal() {
         initComponents();
+        listaAlumnos = new ArrayList<>();
+        listaModulos = new ArrayList<>();
+    }
+    public void agregarAlumno(Alumno alumno){
+        listaAlumnos.add(alumno);
+    }
+    public void agregarModulo(Modulo modulo){
+        listaModulos.add(modulo);
+    }
+    public Alumno obtenerAlumno(int indice){
+        return listaAlumnos.get(indice);
+    } 
+    public Modulo obtenerModulo(int indice){
+        return listaModulos.get(indice);
+    }
+    public int DimensionAlumno(){
+        return listaAlumnos.size();
+    }
+    public int DimensionModulo(){
+        return listaModulos.size();
     }
 
     /**
@@ -69,6 +92,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         miAñadirAlumno.setText("Añadir Alumno");
         miAñadirAlumno.setToolTipText("");
+        miAñadirAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAñadirAlumnoActionPerformed(evt);
+            }
+        });
         MenuAlumno.add(miAñadirAlumno);
 
         miVerAlumno.setText("Ver Alumno");
@@ -79,7 +107,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         MenuAlumno.add(miVerAlumno);
 
-        miGuardarAlumno.setText("Guarda Alumno");
+        miGuardarAlumno.setText("Guardar Alumno");
         MenuAlumno.add(miGuardarAlumno);
 
         miSalvarAlumno.setText("Salvar Alumno");
@@ -158,6 +186,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         JDVerAlumno jdva = new JDVerAlumno(this,true);
         jdva.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnVerAlumnoActionPerformed
+
+    private void miAñadirAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAñadirAlumnoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_miAñadirAlumnoActionPerformed
 
     /**
      * @param args the command line arguments
