@@ -1,3 +1,5 @@
+package AcademiaMas;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -64,7 +66,6 @@ public class Menu extends javax.swing.JFrame {
         lblModulos = new javax.swing.JLabel();
         spLMod = new javax.swing.JScrollPane();
         LMod = new javax.swing.JList<>();
-        jDialog1 = new javax.swing.JDialog();
         btnAnModulo = new javax.swing.JButton();
         btnAnAlumno = new javax.swing.JButton();
         btnVerAlumno = new javax.swing.JButton();
@@ -397,17 +398,6 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnAnModulo.setText("Añadir Módulo");
@@ -596,7 +586,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton btnQuitarAlumno;
     private javax.swing.JButton btnVerAlumno;
     private javax.swing.JComboBox<String> combModulos;
-    private javax.swing.JDialog jDialog1;
     private javax.swing.JList<String> lModulos;
     private javax.swing.JLabel lblAltaAlumno;
     private javax.swing.JLabel lblAltaModulo;

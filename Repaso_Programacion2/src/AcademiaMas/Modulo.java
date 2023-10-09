@@ -6,7 +6,7 @@ package AcademiaMas;
 
 /**
  *
- * @author P13si
+ * @author a21pablosp
  */
 public class Modulo {
        private String nombre;

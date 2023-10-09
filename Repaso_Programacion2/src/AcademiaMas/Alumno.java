@@ -6,7 +6,7 @@ package AcademiaMas;
 import java.util.ArrayList;
 /**
  *
- * @author P13si
+ * @author a21pablosp
  */
 public class Alumno {
     private String nombre;
