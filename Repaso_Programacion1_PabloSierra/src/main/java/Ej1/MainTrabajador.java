@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.repaso_programacion1.EJ1;
+package Ej1;
 
 /**
  *
