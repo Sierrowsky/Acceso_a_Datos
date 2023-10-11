@@ -1,4 +1,13 @@
-package E1;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Ej1;
+
+/**
+ *
+ * @author P13si
+ */
 
 import java.util.Scanner;
 
@@ -137,3 +146,4 @@ public class Trabajador {
                 ", antigüedad=" + antigüedad +", Sueldo :" + calcularSueldo();
     }
 }
+

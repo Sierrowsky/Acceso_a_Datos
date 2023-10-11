@@ -1,8 +1,15 @@
-package E3;
-
-import java.util.Scanner;
-
 /*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Ej3;
+
+/**
+ *
+ * @author P13si
+ * 
+ */
+/**
 Implementa dos funciones para obtener, la parte entera y la parte decimal de un número en
 punto flotante (double). La definición de las funciones es como sigue:
 
@@ -21,43 +28,44 @@ entera o decimal del número introducido.
 El programa principal main se ejecutará hasta que el usuario introduzca la opción adecuada
 para salir (0.5 puntos).
  */
-public class Lectura {
-    public static double num;
+import java.util.Scanner;
+public class Numéricos {
+    public static int getParteEntera(double numero) {
+        return (int) numero;
+    }
+
+    public static int getParteDecimal(double numero) {
+        double decimal = numero - (int) numero;
+        int decimalMod = (int) (decimal * 100);
+        return decimalMod;
+    }
+
     public static Scanner sc;
+
     public static void main(String[] args) {
         sc = new Scanner(System.in);
         boolean system = true;
-        while(system == true){
+        System.out.println("Introduzca un numero:");
+        double numero = sc.nextDouble();
+        while (system) {
             System.out.println("""
-                        Menu
-                    1. Introduzca un número por teclado
-                    2. Obtener parte entera o decimal?
-                    3. Salir 
-                """);
+                            Menu
+                        1. Obtener parte entera
+                        2. Obtener parte decimal
+                        3. Salir 
+                    """);
             int opcion = sc.nextInt();
-            switch (opcion){
+            switch (opcion) {
                 case 1:
-                    numero(num);
+                    System.out.println("La parte Entera es : " + getParteEntera(numero));
                     break;
                 case 2:
-                    fragmentos();
+                    System.out.println("La parte Decimal es : " + getParteDecimal(numero));
                     break;
                 case 3:
-                    system=false;
+                    system = false;
                     break;
             }
         }
-    }
-    public static double numero(double num){
-        sc= new Scanner(System.in);
-        System.out.println("Introduzca un número por teclado");
-        num = sc.nextDouble();
-        return num;
-    }
-    public static void fragmentos(){
-
-        String nums = String.valueOf(num);
-        System.out.println(nums);
-
     }
 }

@@ -1,12 +1,16 @@
-package E4;
-
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
-
 /*
-Haz un programa que pida el nombre y la fecha de nacimiento de dos personas. El nombre en
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Ej4;
+
+/**
+ *
+ * @author P13si
+ * 
+ */
+/**
+ Haz un programa que pida el nombre y la fecha de nacimiento de dos personas. El nombre en
 una línea y la fecha en la siguiente. La fecha se escribirá en el formato dd/mm/aaaa, siendo dd
 un entero que representa al día, mm un entero que representa al mes (entre 1 y 12) y aaaa el
 año.
@@ -19,8 +23,13 @@ Introduce segundo nombre: Juanita
 Introduce segunda fecha de nacimiento [dd/mm/aaaa]: 14/9/1995
 Juanita es menor
 Paquito tiene XX años y Juanita tiene YY años.
+
  */
-public class controlfechas {
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+public class ControlFechas {
     public static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         System.out.println("Escriba el nombre de la primera persona: ");

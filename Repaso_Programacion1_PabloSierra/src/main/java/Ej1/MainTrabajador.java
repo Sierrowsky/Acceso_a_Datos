@@ -1,9 +1,16 @@
-package E1;
-
-import java.util.Scanner;
-
 /*
-Implementa una clase Trabajador con los siguientes atributos y métodos:
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package Ej1;
+
+/**
+ *
+ * @author P13si
+ */
+/**
+ * 
+ * Implementa una clase Trabajador con los siguientes atributos y métodos:
  Atributos privados: nombre, edad, categoría, antigüedad.
 
  Constantes static públicas. Determinan los diferentes tipos de categorías y antigüedad
@@ -33,8 +40,11 @@ valor incorrecto. (0.5 puntos)
  public double calcularSueldo(). Devuelve el sueldo del empleado calculado a partir de
 su antigüedad y categoría profesional. La forma de calcular el sueldo del empleado será
 de acuerdo a la siguiente tabla (0.75 puntos):
+ * 
  */
-public class Main {
+import java.util.Scanner;
+public class MainTrabajador {
+
 private static Scanner sc;
     public static void main(String[] args) {
         sc = new Scanner(System.in);
