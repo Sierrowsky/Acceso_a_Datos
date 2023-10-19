@@ -42,6 +42,11 @@ public class PruebaconDOM {
         Element elemEdad = registroEmpleados.createElement("edad");
         elemEdad.appendChild(registroEmpleados.createTextNode("30"));
         elemPersona.appendChild(elemEdad);
+        elemRaiz.appendChild(elemPersona);
+        elemNombre.appendChild(registroEmpleados.createTextNode("Juan"));
+        elemPersona.appendChild(elemNombre);
+        elemEdad.appendChild(registroEmpleados.createTextNode("21"));
+        elemPersona.appendChild(elemEdad);
             /**
          * Finalmente, para guardar el documento en disco debemos:
          * 
@@ -53,12 +58,14 @@ public class PruebaconDOM {
         Source origen = new DOMSource(registroEmpleados);
         Result resultado= new StreamResult(new File ("Empleados.xml"));
         Transformer transformador = TransformerFactory.newInstance().newTransformer();
+        transformador.setOutputProperty(OutputKeys.INDENT, "yes");
         transformador.transform(origen,resultado);
         /**
          * Mostramos el resultado por la salida estándar
          */
         Result salidaEstandar = new StreamResult(System.out);
         transformador.transform(origen,salidaEstandar);
+        
         //Creamos el DocumentBuilder para poder obtener el Document
 
         

@@ -1,1 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><empleado><pesona><nombre>Carlos</nombre><edad>30</edad></pesona></empleado>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<empleado>
+    <pesona>
+        <nombre>CarlosJuan</nombre>
+        <edad>3021</edad>
+    </pesona>
+</empleado>
