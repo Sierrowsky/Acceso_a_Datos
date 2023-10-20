@@ -30,23 +30,12 @@ public class PruebaconDOM {
          *
          */
         Document registroEmpleados = builder.newDocument();
-        //Asignamos la versión de XML
         registroEmpleados.setXmlVersion("1.0");
         Element elemRaiz = registroEmpleados.createElement("empleado");
         registroEmpleados.appendChild(elemRaiz);
-        Element elemPersona = registroEmpleados.createElement("pesona");
-        elemRaiz.appendChild(elemPersona);
-        Element elemNombre = registroEmpleados.createElement("nombre");
-        elemNombre.appendChild(registroEmpleados.createTextNode("Carlos"));
-        elemPersona.appendChild(elemNombre);
-        Element elemEdad = registroEmpleados.createElement("edad");
-        elemEdad.appendChild(registroEmpleados.createTextNode("30"));
-        elemPersona.appendChild(elemEdad);
-        elemRaiz.appendChild(elemPersona);
-        elemNombre.appendChild(registroEmpleados.createTextNode("Juan"));
-        elemPersona.appendChild(elemNombre);
-        elemEdad.appendChild(registroEmpleados.createTextNode("21"));
-        elemPersona.appendChild(elemEdad);
+        Empleados(registroEmpleados, "carlos", "30");
+        Empleados(registroEmpleados, "juan", "23");
+        //Asignamos la versión de XML
             /**
          * Finalmente, para guardar el documento en disco debemos:
          * 
@@ -69,6 +58,17 @@ public class PruebaconDOM {
         //Creamos el DocumentBuilder para poder obtener el Document
 
         
+    }
+    public static void Empleados(Document registroEmpleados, String Nombre, String Edad){
+        
+        Element elemPersona = registroEmpleados.createElement("pesona");
+        registroEmpleados.getDocumentElement().appendChild(elemPersona);
+        Element elemNombre = registroEmpleados.createElement("nombre");
+        elemNombre.appendChild(registroEmpleados.createTextNode(Nombre));
+        elemPersona.appendChild(elemNombre);
+        Element elemEdad = registroEmpleados.createElement("edad");
+        elemEdad.appendChild(registroEmpleados.createTextNode(Edad));
+        elemPersona.appendChild(elemEdad);
     }
     
 }
