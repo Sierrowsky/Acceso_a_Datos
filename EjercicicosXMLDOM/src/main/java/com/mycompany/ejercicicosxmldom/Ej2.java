@@ -29,7 +29,7 @@ public class Ej2 {
             //Crear un DocumentBuilder
             DocumentBuilder db = dbf.newDocumentBuilder();
             //Analizar el documento XML
-            Document doc = db.parse("libros2.xml");
+            Document doc = db.parse("XML/libros2.xml");
             //Obtener la lista de nodos de libros
             NodeList nl = doc.getElementsByTagName("libro");
             double totalPrecio=0;

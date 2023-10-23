@@ -26,7 +26,7 @@ public class Ej1 {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             //Parsea el archivo XML
-            Document doc = db.parse(new File("libros.xml"));
+            Document doc = db.parse(new File("XML/libros.xml"));
             //Obtiene el elemento Raíz
             Element raiz = doc.getDocumentElement();
             //Obtinee una lista de nodos hijo(que son los elementos "libro" en este caso)
