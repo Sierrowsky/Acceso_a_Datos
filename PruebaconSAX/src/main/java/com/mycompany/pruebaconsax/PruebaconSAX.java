@@ -3,6 +3,10 @@
  */
 
 package com.mycompany.pruebaconsax;
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 /**
@@ -11,15 +15,14 @@ import org.xml.sax.helpers.*;
  */
 public class PruebaconSAX {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         try{
-        XMLReader procesadorxml = XMLReaderFactory.createXMLReader();
-        procesadorxml.setContentHandler(new AlumnosReader());
-        InputSource xmlFile=new InputSource("XML/alumnosSAX.xml");
-        procesadorxml.parse(xmlFile);
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser parser = factory.newSAXParser();
+        AlumnosReader handler = new AlumnosReader();
+        parser.parse("XML/librosinfoSAX.xml", handler);
         
-        }catch (SAXException | IOExceptiion e){
-            e.printStacTrace();}
+        }catch (SAXException | IOException | ParserConfigurationException e ){
+            e.printStackTrace();}
     }
-}
 }
