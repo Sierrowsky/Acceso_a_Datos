@@ -45,7 +45,7 @@ public class PracticaFicheros2_2 {
         }
         try(FileWriter fw = new FileWriter(pe)){
             fw.write("Nombre Apellido : Promedio\n");
-            for(String linea : li){
+            for(String linea : le){
                 String[] datos = linea.split(",");
                 String nombre = datos[0];
             }
