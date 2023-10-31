@@ -5,6 +5,7 @@
 package com.mycompany.mavenproject1;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -42,6 +43,9 @@ import java.util.ArrayList;
 public class EJ1 {
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        boolean sistem= true;
+        while(sistem);
         System.out.println("""
                            MENÚ
                 1. Consulta de Datos
@@ -51,6 +55,29 @@ public class EJ1 {
                 5. Listado de Datos
                 6. Salir
                 """);
+        int opcion;
+        System.out.println("Elija una opcion");
+        opcion= sc.next;
+        switch(opcion){
+            case 1:
+                consulta();
+                break;
+            case 2:
+                insercion();
+                break;
+            case 3:
+                modificacion();
+                break;
+            case 4:
+                borrado();
+                break;
+            case 5:
+                listado();
+                break;
+            case 6:
+                sistem=false;
+                break;
+        }
     }
     
 }
