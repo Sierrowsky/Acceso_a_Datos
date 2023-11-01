@@ -4,6 +4,7 @@
 
 package com.mycompany.mavenproject1;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,6 +42,22 @@ import java.util.Scanner;
  * 
  */
 public class EJ1 {
+    static Scanner sc;
+    static File file = new File("./XML/Empleados.txt");
+    static File temp = new File("./XML/EmpleadosTemp.txt");
+    private static void creacionFichero(File file){
+        if(!file.exists){
+            try{
+                file.createNewFile();
+            }catch(IOException e){
+                throw new RuntimeException 
+        (e);
+            }
+        }
+    }
+    public static void insercion(){
+        
+    } 
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
