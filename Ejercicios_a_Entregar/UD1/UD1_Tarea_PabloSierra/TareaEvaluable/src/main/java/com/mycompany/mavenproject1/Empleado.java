@@ -4,11 +4,13 @@
  */
 package com.mycompany.mavenproject1;
 
+import java.io.Serializable;
+
 /**
  *
  * @author a21pablosp
  */
-public class Empleado {
+public class Empleado implements Serializable {
     private String nif;
     private String nombre;
     private String apellidos;

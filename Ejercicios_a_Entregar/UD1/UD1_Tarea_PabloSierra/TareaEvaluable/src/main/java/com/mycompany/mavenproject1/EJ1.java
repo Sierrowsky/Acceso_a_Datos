@@ -5,6 +5,9 @@
 package com.mycompany.mavenproject1;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,7 +25,8 @@ import java.util.Scanner;
  * • NIF 9 caracteres (8 números y 1 letra)
  * • Nombre → 10 caracteres
  * • Apellidos → 20 caracteres
- * • Salario La aplicación debe permitir la inserción, consulta, modificación y borrado de empleados.
+ * • Salario 
+ *  La aplicación debe permitir la inserción, consulta, modificación y borrado de empleados.
  * • Consulta → Solicitará al usuario el NIF del empleado a
  *  ◦ Si existe mostrará su información, en caso contrario indicará que el empleado solicitado
  *    no existe.
@@ -46,17 +50,31 @@ public class EJ1 {
     static File file = new File("./XML/Empleados.txt");
     static File temp = new File("./XML/EmpleadosTemp.txt");
     private static void creacionFichero(File file){
-        if(!file.exists){
+        if(!file.exists()){
             try{
                 file.createNewFile();
             }catch(IOException e){
-                throw new RuntimeException 
-        (e);
+                throw new RuntimeException(e);
             }
         }
     }
     public static void insercion(){
-        
+        creacionFichero(file);
+        sc= new Scanner (System.in);
+        System.out.println("Introduzca el DNI del Empleado:");
+        String nif = sc.nextLine();
+        System.out.println("Introduzca el nombre del Empleado: ");
+        String nombre = sc.nextLine();
+        System.out.println("Introduzca el apellido del Empleado: ");
+        String apellidos = sc.nextLine();
+        System.out.println("Introduzca el sueldo del Empleado: ");
+        double sueldo = sc.nextDouble();
+        Empleado empleado = new Empleado(nif, nombre, apellidos, sueldo);
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file,true))){
+            oos.writeObject(empleado);
+        }catch(IOException e){
+            throw new RuntimeException(e);
+        }
     } 
 
     public static void main(String[] args) {
