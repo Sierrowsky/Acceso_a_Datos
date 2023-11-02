@@ -7,7 +7,7 @@ package com.mycompany.mavenproject1;
 import java.io.Serializable;
 
 /**
- *
+ *¡
  * @author a21pablosp
  */
 public class Empleado implements Serializable {
@@ -53,6 +53,13 @@ public class Empleado implements Serializable {
 
     public void setSalario(double salario) {
         this.salario = salario;
+    }
+
+    @Override
+    public String toString() {
+        return """
+               Empleado : 
+               nif : """ + nif + ", nombre : " + nombre + ", apellidos : " + apellidos + ", salario : " + salario;
     }
     
 }

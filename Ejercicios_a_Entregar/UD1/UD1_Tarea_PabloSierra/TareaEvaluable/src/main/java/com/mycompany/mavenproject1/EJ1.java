@@ -4,9 +4,12 @@
 
 package com.mycompany.mavenproject1;
 
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -70,17 +73,123 @@ public class EJ1 {
         System.out.println("Introduzca el sueldo del Empleado: ");
         double sueldo = sc.nextDouble();
         Empleado empleado = new Empleado(nif, nombre, apellidos, sueldo);
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file,true))){
-            oos.writeObject(empleado);
+        try(MyObjectOutputStream moos = new MyObjectOutputStream(new FileOutputStream(file,true))){
+            moos.writeObject(empleado);
         }catch(IOException e){
             throw new RuntimeException(e);
         }
     } 
+    public static void consulta(){
+        creacionFichero(file);
+        System.out.println("Introduzca el DNI del empleado");
+        sc = new Scanner(System.in);
+        int cont = 0;
+        String dni = sc.next();
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))){
+            Empleado empleado;
+            while(true){
+                empleado=(Empleado) ois.readObject();
+                if(dni.equalsIgnoreCase(empleado.getNif())){
+                System.out.print(empleado);
+                cont++;
+                }
+            }
+        }catch(EOFException e){
+            System.out.println("Fin del archivo");
+            if (cont == 0){
+                System.out.println("No hay empleados registrados");
+            }
+        }
+        catch (IOException | ClassNotFoundException e){
+            throw new RuntimeException (e);
+        }
+    }
+    public static void modificacion(){
+        creacionFichero(temp);
+        sc = new Scanner(System.in);
+        System.out .println("Introduce el dni del empleado a modificar");
+        String dni = sc.nextLine();
+        int cont=0;
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+            MyObjectOutputStream mtoos = new MyObjectOutputStream(new FileOutputStream(temp, true))){
+            Empleado empleado;
+            while(true){
+                empleado=(Empleado) ois.readObject();
+                if(empleado.getNif().equalsIgnoreCase(dni)){
+                    System.out.println("Introduzca el salario modificado");
+                    empleado.setSalario(sc.nextDouble());
+                    System.out.println(empleado.getNif() + " " + empleado.getNombre() + " " + empleado.getApellidos() + " " + empleado.getSalario());
+                    mtoos.writeObject(empleado);
+                }else{
+                    mtoos.writeObject(empleado);
+                    cont++;
+                }
+                
+            }
+        }catch (EOFException e){
+            System.out.println("Fin del archivo");
+            file.delete();
+            temp.renameTo(file);
+            if (cont == 0){
+                System.out.println("No hay empleados registrados");
+            }
+        }catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void borrado(){
+        creacionFichero(temp);
+        sc = new Scanner(System.in);
+        System.out .println("Introduce el dni del empleado a eliminar");
+        String dni = sc.nextLine();
+        int cont=0;
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+            MyObjectOutputStream mtoos = new MyObjectOutputStream(new FileOutputStream(temp, true))){
+            Empleado empleado;
+            while(true){
+                empleado=(Empleado) ois.readObject();
+                if(!empleado.getNif().equalsIgnoreCase(dni)){
+                    mtoos.writeObject(empleado);
+                }else{
+                    System.out.println("Se ha eliminado el empleado" + empleado);
+                }
+            }
+        }catch (EOFException e){
+            System.out.println("Fin del archivo");
+            file.delete();
+            temp.renameTo(file);
+            if (cont == 0){
+                System.out.println("No hay empleados registrados");
+            }
+        }catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void listado(){
+        creacionFichero(file);
+        int cont = 0;
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))){
+            Empleado empleado;
+            while(true){
+                empleado = (Empleado) ois.readObject();
+                System.out.println(empleado);
+                cont++;
+            }
+        }catch (EOFException e) {
+            System.out.println("Fin del archivo");
+            if (cont == 0){
+                System.out.println("No hay alumnos registrados");
+            }
+        }
+        catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        sc = new Scanner(System.in);
         boolean sistem= true;
-        while(sistem);
+        while(sistem){
         System.out.println("""
                            MENÚ
                 1. Consulta de Datos
@@ -92,7 +201,7 @@ public class EJ1 {
                 """);
         int opcion;
         System.out.println("Elija una opcion");
-        opcion= sc.next;
+        opcion= sc.nextInt();
         switch(opcion){
             case 1:
                 consulta();
@@ -113,6 +222,6 @@ public class EJ1 {
                 sistem=false;
                 break;
         }
+        }
     }
-    
 }
