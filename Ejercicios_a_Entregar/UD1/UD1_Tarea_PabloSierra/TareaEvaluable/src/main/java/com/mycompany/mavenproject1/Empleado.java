@@ -57,9 +57,10 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return """
-               Empleado : 
-               nif : """ + nif + ", nombre : " + nombre + ", apellidos : " + apellidos + ", salario : " + salario;
+        return "Empleado :" +
+               "\n" +  "DNI : " + nif + "\n" +
+               "Nombre : " + nombre + "\n" + "Apellidos : "
+               + apellidos + "\n" + "Salario : " + salario + "\n";
     }
     
 }
