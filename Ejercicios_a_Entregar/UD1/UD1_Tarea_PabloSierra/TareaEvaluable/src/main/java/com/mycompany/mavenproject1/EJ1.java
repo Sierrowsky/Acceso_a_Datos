@@ -13,6 +13,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
 
 /**
  *
@@ -222,6 +230,17 @@ public class EJ1 {
                 sistem=false;
                 break;
         }
+        }
+    }
+    public static void saveDocument(File file) {
+        try {
+            Source origen = new DOMSource();
+            Result resultado= new StreamResult(new File ("Empleados.xml"));
+            Transformer transformador = TransformerFactory.newInstance().newTransformer();
+            transformador.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformador.transform(origen,resultado);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
