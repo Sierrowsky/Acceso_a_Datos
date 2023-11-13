@@ -27,7 +27,8 @@ public class ConexionBasesdeDatos {
             //Establecemos la conexion con la BBDD
             Connection conexion =
                     DriverManager.getConnection("jdbc:mysql://localhost/empleados","root","root");
-            //Preparamos la consulta
+            /**
+             * Preparamos la consulta
             Statement sentencia= conexion.createStatement();
             String sql = "Select * from empleado";
             ResultSet resultado = sentencia.executeQuery(sql);
@@ -37,14 +38,45 @@ public class ConexionBasesdeDatos {
                 String nombre= resultado.getString(2);
                 String apellidos=resultado.getString(3);
                 Double salario=resultado.getDouble(8);
+                //printeamos los resultados
+                System.out.println(nif +" " + nombre +" "+ apellidos+" " + salario);
             }
             //Liberamos los recursos
             resultado.close();
             sentencia.close();
             conexion.close();
+        */
+            /**
+            //Creacion de tablas
         
+            Statement sentencia = conexion.createStatement();
+            String sql = "Create table if not exists salarios("
+                    + "codigo varchar(23),"
+                    + "especialidad varchar(23),"
+                    + "Constraint mascotas_PK PRIMARY KEY(codigo)"
+                    + ");";
+            int resultado = sentencia.executeUpdate(sql);
+            System.out.println(resultado);
+            conexion.close();
+            sentencia.close();
+            */
+            
+            //INSERCION DE DATOS
+            Statement consulta = conexion.createStatement();
+            String sql = "INSERT INTO salarios(codigo, especialidad) VALUES("
+                    +"'001','Programador'),"
+                    +"('002','Programador'),"
+                    +"('003','Analista'),"
+                    + "('004','Analista')";
+            consulta = conexion.prepareStatement(sql);
+            int n = consulta.executeUpdate(sql);
+            if(n>0)
+                System.out.println("Se ha insertado en la BBDD");
+            
         }catch(SQLException e){
             e.printStackTrace();
         }
+        
     }
+    
 }
