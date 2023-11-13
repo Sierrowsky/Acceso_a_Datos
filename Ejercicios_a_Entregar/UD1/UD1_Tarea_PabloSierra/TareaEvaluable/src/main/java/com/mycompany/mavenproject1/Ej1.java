@@ -10,14 +10,14 @@ import java.util.Scanner;
  *
  * @author P13si
  */
-public class Ej1Mod {
+public class Ej1 {
     static Scanner sc;
     public static void main(String[] args){
         sc = new Scanner(System.in);
         ArrayList<Empleado> empleados = new ArrayList<>();
         boolean menu = true;
         while(menu){
-            System.out.print("""
+            System.out.println("""
                                 MENÚ
                     1. Inserccion de Datos
                     2. Consulta de Datos
