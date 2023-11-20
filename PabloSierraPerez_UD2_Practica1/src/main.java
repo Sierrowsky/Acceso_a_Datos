@@ -4,6 +4,8 @@
  */
 import java.sql.*;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author a21pablosp
@@ -18,6 +20,8 @@ public class main {
         sc = new Scanner(System.in);
         boolean system = true;
         int opc = 0;
+        try{
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/empleados","root","root");
         while(system){
             System.out.println("""
                                         Menu
@@ -30,16 +34,16 @@ public class main {
             opc = sc.nextInt();
             switch (opc) {
                 case 1:
-                    consultaemp();
+                    consultaemp(conexion);
                     break;
                 case 2:
-                    consultadni();
+                    consultadni(conexion);
                     break;
                 case 3:
-                    consultass();
+                    consultass( conexion);
                     break;
                 case 4:
-                    consultasif();
+                    consultasif(conexion);
                     break;
                 case 5:
                     system = false;
@@ -50,21 +54,106 @@ public class main {
         }
         
         // TODO code application logic here
-        try {
-            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/empleados","root","root");
+
+            
         } catch (Exception e) {
         }
     }
-    public static void consultaemp(String[] args) {
-        
+    public static void consultaemp(Connection conexion) {
+        try {
+            Statement consulta = conexion.createStatement();
+            String sql = "Select * from empleado";
+            ResultSet result = consulta.executeQuery(sql);
+            while (result.next()){
+                System.out.println("NSS :" + result.getString("NSS"));
+                System.out.println("Nombre :" +  result.getString("Nombre"));
+                System.out.println("Apellidos :" + result.getString("Apel1")+ " " + result.getString("Apel2"));
+                System.out.println("Sexo :" + result.getString("Sexo"));
+                System.out.println("Direccion :" + result.getString("Dirección"));
+                System.out.println("Fecha Nacimiento :" + result.getString("Fechanac"));
+                System.out.println("Salario :" + result.getInt("Salario"));
+                System.out.println("Nº de departamento :" + result.getInt("Numdept"));
+                System.out.println("NSS del superior :" + result.getString("NSSsup"));
+                System.out.println("NIF : " + result.getString("NIF"));
+                System.out.println("----------------------------------------------------------");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
-    public static void consultadni(String[] args) {
-        
+    public static void consultadni(Connection conexion) {
+        try {
+            sc = new Scanner(System.in);
+            System.out.println("Escriba un DNI del empleado : ");
+            String dnibus = sc.nextLine();
+            Statement consulta = conexion.createStatement();
+            String sql = "Select * from empleado where NIF =" + "'" +dnibus +"';";
+            ResultSet result = consulta.executeQuery(sql);
+            while (result.next()){
+                System.out.println("NSS :" + result.getString("NSS"));
+                System.out.println("Nombre :" +  result.getString("Nombre"));
+                System.out.println("Apellidos :" + result.getString("Apel1")+ " " + result.getString("Apel2"));
+                System.out.println("Sexo :" + result.getString("Sexo"));
+                System.out.println("Direccion :" + result.getString("Dirección"));
+                System.out.println("Fecha Nacimiento :" + result.getString("Fechanac"));
+                System.out.println("Salario :" + result.getInt("Salario"));
+                System.out.println("Nº de departamento :" + result.getInt("Numdept"));
+                System.out.println("NSS del superior :" + result.getString("NSSsup"));
+                System.out.println("NIF : " + result.getString("NIF"));
+                System.out.println("----------------------------------------------------------");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
-    public static void consultass(String[] args) {
-        
+    public static void consultass(Connection conexion) {
+        try {
+            sc = new Scanner(System.in);
+            System.out.println("Escriba un salario : ");
+            int salariobusq = sc.nextInt();
+            Statement consulta = conexion.createStatement();
+            String sql = "Select * from empleado where Salario >" + "'" +salariobusq +"';";
+            ResultSet result = consulta.executeQuery(sql);
+            while (result.next()){
+                System.out.println("NSS :" + result.getString("NSS"));
+                System.out.println("Nombre :" +  result.getString("Nombre"));
+                System.out.println("Apellidos :" + result.getString("Apel1")+ " " + result.getString("Apel2"));
+                System.out.println("Sexo :" + result.getString("Sexo"));
+                System.out.println("Direccion :" + result.getString("Dirección"));
+                System.out.println("Fecha Nacimiento :" + result.getString("Fechanac"));
+                System.out.println("Salario :" + result.getInt("Salario"));
+                System.out.println("Nº de departamento :" + result.getInt("Numdept"));
+                System.out.println("NSS del superior :" + result.getString("NSSsup"));
+                System.out.println("NIF : " + result.getString("NIF"));
+                System.out.println("----------------------------------------------------------");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
-    public static void consultasif(String[] args) {
-        
+    public static void consultasif(Connection conexion) {
+         try {
+            sc = new Scanner(System.in);
+            System.out.println("Escriba un salario : ");
+            int salariobusq = sc.nextInt();
+            Statement consulta = conexion.createStatement();
+            String sql = "Select * from empleado where Salario <=" + "'" +salariobusq +"';";
+            ResultSet result = consulta.executeQuery(sql);
+            while (result.next()){
+                System.out.println("NSS :" + result.getString("NSS"));
+                System.out.println("Nombre :" +  result.getString("Nombre"));
+                System.out.println("Apellidos :" + result.getString("Apel1")+ " " + result.getString("Apel2"));
+                System.out.println("Sexo :" + result.getString("Sexo"));
+                System.out.println("Direccion :" + result.getString("Dirección"));
+                System.out.println("Fecha Nacimiento :" + result.getString("Fechanac"));
+                System.out.println("Salario :" + result.getInt("Salario"));
+                System.out.println("Nº de departamento :" + result.getInt("Numdept"));
+                System.out.println("NSS del superior :" + result.getString("NSSsup"));
+                System.out.println("NIF : " + result.getString("NIF"));
+                System.out.println("----------------------------------------------------------");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

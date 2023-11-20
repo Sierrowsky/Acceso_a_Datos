@@ -20,7 +20,7 @@ import java.sql.Statement;
  * @author a21pablosp
  */
 public class ConexionBasesdeDatos {
-
+    
     public static void main(String[] args) {
         //cargar el Driver
         try{
