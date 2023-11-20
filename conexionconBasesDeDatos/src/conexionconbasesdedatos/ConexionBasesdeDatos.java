@@ -72,6 +72,7 @@ public class ConexionBasesdeDatos {
             int n = consulta.executeUpdate(sql);
             if(n>0)
                 System.out.println("Se ha insertado en la BBDD");
+            System.out.println("");
             
         }catch(SQLException e){
             e.printStackTrace();
