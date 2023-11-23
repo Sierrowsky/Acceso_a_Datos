@@ -144,10 +144,10 @@ public class ConexionyData {
                 int salario = sc.nextInt();
                 System.out.println("Escriba el numero del departamento");
                 int numdep = sc.nextInt();
-                String sql = "Insert into empleado values(" + nss + "," + nombre + "," + apellido1 + 
-                        "," + apellido2 + ","+ sexo + ","+ direccion + ","+ fechanac + ","+ salario +
-                        "," + numdep + "," + nsss + "," + dni + ","  +");";
-                ResultSet resultado = consulta.executeQuery(sql);
+                String sql = "Insert into empleado values(" + "'"+ nss+ "'"+ "," + "'"+ nombre + "'"+ "," + "'"+ apellido1 + "'"+ 
+                        "," + "'"+ apellido2 + "'"+ ","+ sexo + "'"+ ","+ "'"+ direccion + "'"+ ","+ "'"+ fechanac + "'"+ ","+ "'"+ salario + "'"+
+                        "," + "'"+ numdep + "'"+ "," + nsss + "'"+ "," + "'"+ dni + "'" +");";
+                consulta.executeQuery(sql);
             }else
                 System.out.println("El dni del empleado ya existe");
         }
