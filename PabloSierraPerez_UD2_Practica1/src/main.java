@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
+
 import java.sql.*;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -19,37 +20,126 @@ public class main {
     public static void main(String[] args) {
         sc = new Scanner(System.in);
         boolean system = true;
-        int opc = 0;
+        int opc1 = 0;
         try{
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/empleados","root","root");
         while(system){
             System.out.println("""
                                         Menu
-                           1.   Consultar todos los empleados.
-                           2.   Consultar empleados por dni/nif.
-                           3.   Consultar empleados que tengan un salario superior al introducido por el usuario.
-                           4.   Consultra empleados que tengan un salario igual o inferior al introducido por el usuario.
+                           1.   Gestión empleados.
+                           2.   Gestión de departamentos
+                           3.   Salir.
                            """);
             System.out.println("Introduce una opcion :");
-            opc = sc.nextInt();
-            switch (opc) {
+            opc1 = sc.nextInt();
+            switch (opc1) {
                 case 1:
-                    consultaemp(conexion);
+                    boolean system2= true;
+                    int opc2 = 0;
+                    System.out.println("""
+                                                Menu Empleados
+                                       a.   Insertar empleado.
+                                       b.   Modificar empleado.
+                                       c.   Borrar empleado.
+                                       d.   Listar todos los empleados.
+                                       e.   Listar todos los empleados de un departamento.
+                                       f.   Consultar empleados por nif/dni.
+                                       g.   Consultar empleados que tengan un salario superior al introducido por el usuario.                                 
+                                       h.   Consultar empleados que tengan un salario igual o inferior al introducido por el usuario. 
+                                       s.   Salir
+                                       """);
+                    System.out.println("Introduce una opcion :");
+                    opc2 = sc.nextInt();
+                    switch (opc2) {
+                        case 1:
+                            ConexionyData.insertaremp(conexion);
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            ConexionyData.consultaemp(conexion);
+                            break;
+                        case 5:
+                            break;
+                        case 6:
+                            ConexionyData.consultadni(conexion);
+                            break;
+                        case 7:
+                            ConexionyData.consultass(conexion);
+                            break;
+                        case 8:
+                            ConexionyData.consultasif(conexion);
+                            break;
+                        case 9:
+                            system2 = false;
+                            break;
+                        default:
+                            throw new AssertionError();
+                            
+                    }
                     break;
                 case 2:
-                    consultadni(conexion);
+                    boolean system3 = true;
+                    int opc3 = 0;
+                    System.out.println("""
+                                                Menu Departamentos
+                                       a.   Insertar departamento
+                                       b.   Modificar departamento
+                                       c.   Eliminar departamento
+                                       d.   Listar todos los departamentos
+                                       e.   Ver información de un único departamento
+                                       s.   Salir
+                                       """);
+                    System.out.println("Introduce una opcion :");
+                    opc3 = sc.nextInt();
+                    switch (opc3) {
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            boolean system4 = true;
+                            int opc4 = 0;
+                            System.out.println("""
+                                                        Menu info departamento
+                                               i.   Por nombre
+                                               ii.  Por ID
+                                               s.   Salir
+                                               """);
+                            System.out.println("Introduce una opcion :");
+                            opc4 = sc.nextInt();
+                            switch (opc4) {
+                                case 1:
+                                    break;
+                                case 2:
+                                    break;
+                                case 3:
+                                    system4 = false;
+                                    break;
+                                default:
+                                    throw new AssertionError();
+                                    
+                            }
+                            break;
+                        case 6:
+                            break;
+                        default:
+                            throw new AssertionError();
+                            
+                    }
                     break;
                 case 3:
-                    consultass( conexion);
-                    break;
-                case 4:
-                    consultasif(conexion);
-                    break;
-                case 5:
-                    system = false;
+                    system=false;
                     break;
                 default:
                     throw new AssertionError();
+                   
             }
         }
         
@@ -57,103 +147,8 @@ public class main {
 
             
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-    public static void consultaemp(Connection conexion) {
-        try {
-            Statement consulta = conexion.createStatement();
-            String sql = "Select * from empleado";
-            ResultSet result = consulta.executeQuery(sql);
-            while (result.next()){
-                System.out.println("NSS :" + result.getString("NSS"));
-                System.out.println("Nombre :" +  result.getString("Nombre"));
-                System.out.println("Apellidos :" + result.getString("Apel1")+ " " + result.getString("Apel2"));
-                System.out.println("Sexo :" + result.getString("Sexo"));
-                System.out.println("Direccion :" + result.getString("Dirección"));
-                System.out.println("Fecha Nacimiento :" + result.getString("Fechanac"));
-                System.out.println("Salario :" + result.getInt("Salario"));
-                System.out.println("Nº de departamento :" + result.getInt("Numdept"));
-                System.out.println("NSS del superior :" + result.getString("NSSsup"));
-                System.out.println("NIF : " + result.getString("NIF"));
-                System.out.println("----------------------------------------------------------");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    public static void consultadni(Connection conexion) {
-        try {
-            sc = new Scanner(System.in);
-            System.out.println("Escriba un DNI del empleado : ");
-            String dnibus = sc.nextLine();
-            Statement consulta = conexion.createStatement();
-            String sql = "Select * from empleado where NIF =" + "'" +dnibus +"';";
-            ResultSet result = consulta.executeQuery(sql);
-            while (result.next()){
-                System.out.println("NSS :" + result.getString("NSS"));
-                System.out.println("Nombre :" +  result.getString("Nombre"));
-                System.out.println("Apellidos :" + result.getString("Apel1")+ " " + result.getString("Apel2"));
-                System.out.println("Sexo :" + result.getString("Sexo"));
-                System.out.println("Direccion :" + result.getString("Dirección"));
-                System.out.println("Fecha Nacimiento :" + result.getString("Fechanac"));
-                System.out.println("Salario :" + result.getInt("Salario"));
-                System.out.println("Nº de departamento :" + result.getInt("Numdept"));
-                System.out.println("NSS del superior :" + result.getString("NSSsup"));
-                System.out.println("NIF : " + result.getString("NIF"));
-                System.out.println("----------------------------------------------------------");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    public static void consultass(Connection conexion) {
-        try {
-            sc = new Scanner(System.in);
-            System.out.println("Escriba un salario : ");
-            int salariobusq = sc.nextInt();
-            Statement consulta = conexion.createStatement();
-            String sql = "Select * from empleado where Salario >" + "'" +salariobusq +"';";
-            ResultSet result = consulta.executeQuery(sql);
-            while (result.next()){
-                System.out.println("NSS :" + result.getString("NSS"));
-                System.out.println("Nombre :" +  result.getString("Nombre"));
-                System.out.println("Apellidos :" + result.getString("Apel1")+ " " + result.getString("Apel2"));
-                System.out.println("Sexo :" + result.getString("Sexo"));
-                System.out.println("Direccion :" + result.getString("Dirección"));
-                System.out.println("Fecha Nacimiento :" + result.getString("Fechanac"));
-                System.out.println("Salario :" + result.getInt("Salario"));
-                System.out.println("Nº de departamento :" + result.getInt("Numdept"));
-                System.out.println("NSS del superior :" + result.getString("NSSsup"));
-                System.out.println("NIF : " + result.getString("NIF"));
-                System.out.println("----------------------------------------------------------");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    public static void consultasif(Connection conexion) {
-         try {
-            sc = new Scanner(System.in);
-            System.out.println("Escriba un salario : ");
-            int salariobusq = sc.nextInt();
-            Statement consulta = conexion.createStatement();
-            String sql = "Select * from empleado where Salario <=" + "'" +salariobusq +"';";
-            ResultSet result = consulta.executeQuery(sql);
-            while (result.next()){
-                System.out.println("NSS :" + result.getString("NSS"));
-                System.out.println("Nombre :" +  result.getString("Nombre"));
-                System.out.println("Apellidos :" + result.getString("Apel1")+ " " + result.getString("Apel2"));
-                System.out.println("Sexo :" + result.getString("Sexo"));
-                System.out.println("Direccion :" + result.getString("Dirección"));
-                System.out.println("Fecha Nacimiento :" + result.getString("Fechanac"));
-                System.out.println("Salario :" + result.getInt("Salario"));
-                System.out.println("Nº de departamento :" + result.getInt("Numdept"));
-                System.out.println("NSS del superior :" + result.getString("NSSsup"));
-                System.out.println("NIF : " + result.getString("NIF"));
-                System.out.println("----------------------------------------------------------");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
+   
 }
