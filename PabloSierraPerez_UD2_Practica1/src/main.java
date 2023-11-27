@@ -55,8 +55,10 @@ public class main {
                             ConexionyData.insertaremp(conexion);
                             break;
                         case 2:
+                            ConexionyData.modifemp(conexion);
                             break;
                         case 3:
+                            ConexionyData.deletemp(conexion);
                             break;
                         case 4:
                             ConexionyData.consultaemp(conexion);

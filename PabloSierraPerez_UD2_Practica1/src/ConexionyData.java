@@ -136,20 +136,102 @@ public class ConexionyData {
                 String sexo = sc.nextLine();
                 System.out.println("Escriba la direccion del empleado");
                 String direccion = sc.nextLine();
-                System.out.println("Escriba la fecha de nacimiento(año-mes-dia) del empleado");
+                System.out.println("Escriba la fecha de nacimiento (año-mes-dia) del empleado");
                 String fechanac = sc.nextLine();
+                // Convert fechanac to a java.sql.Date object
+                java.sql.Date fechaNacimiento = java.sql.Date.valueOf(fechanac);
                 System.out.println("Escriba NSS del superior");
                 String nsss = sc.nextLine();
                 System.out.println("Escriba el salario del empleado");
                 int salario = sc.nextInt();
                 System.out.println("Escriba el numero del departamento");
                 int numdep = sc.nextInt();
-                String sql = "Insert into empleado values(" + "'"+ nss+ "'"+ "," + "'"+ nombre + "'"+ "," + "'"+ apellido1 + "'"+ 
-                        "," + "'"+ apellido2 + "'"+ ","+ sexo + "'"+ ","+ "'"+ direccion + "'"+ ","+ "'"+ fechanac + "'"+ ","+ "'"+ salario + "'"+
-                        "," + "'"+ numdep + "'"+ "," + nsss + "'"+ "," + "'"+ dni + "'" +");";
-                consulta.executeQuery(sql);
+                String sql = "INSERT INTO empleado VALUES ('" + nss + "', '" + nombre + "', '" + apellido1 +
+                        "', '" + apellido2 + "', '" + sexo + "', '" + direccion + "', '" + fechaNacimiento + "', '" + salario +
+                        "', '" + numdep + "', '" + nsss + "', '" + dni + "')";
+                int rA = consulta.executeUpdate(sql);
+                if(rA >0){
+                    System.out.println("Empleado Insertado Correctamente");
+                }else{
+                    System.out.println("Error al insertar el empleado");
+                }
             }else
                 System.out.println("El dni del empleado ya existe");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    } 
+    public static void modifemp(Connection conexion){
+        sc = new Scanner(System.in);
+        try {
+            System.out.println("Modificacion de empleados");
+            System.out.println("Introduzca el dni del empleado a modificar : ");
+            String dni = sc.nextLine();
+            Statement consulta = conexion.createStatement();
+            String sqld = "Select * from empleado where nif = " + "'"+ dni+ "'" +";";
+            ResultSet result = consulta.executeQuery(sqld);
+            if(!result.next()){
+                System.out.println("El empleado no existe");
+            }else{
+                System.out.println("Escriba un NSS del empleado");
+                String nss = sc.nextLine();
+                System.out.println("Escriba el Nombre del empleado");
+                String nombre = sc.nextLine();
+                System.out.println("Escriba el Apellido 1 del empleado");
+                String apellido1 = sc.nextLine();
+                System.out.println("Escriba el Apellido 2 del empleado");
+                String apellido2 = sc.nextLine();
+                System.out.println("Escriba el sexo del empleado");
+                String sexo = sc.nextLine();
+                System.out.println("Escriba la direccion del empleado");
+                String direccion = sc.nextLine();
+                System.out.println("Escriba la fecha de nacimiento (año-mes-dia) del empleado");
+                String fechanac = sc.nextLine();
+                // Convert fechanac to a java.sql.Date object
+                java.sql.Date fechaNacimiento = java.sql.Date.valueOf(fechanac);
+                System.out.println("Escriba NSS del superior");
+                String nsss = sc.nextLine();
+                System.out.println("Escriba el salario del empleado");
+                int salario = sc.nextInt();
+                System.out.println("Escriba el numero del departamento");
+                int numdep = sc.nextInt();
+                
+                String sqlupdate = "UPDATE empleado SET NSS = '" + nss + "', Nombre = '" + nombre + "', Apel1 = '" + apellido1 +
+                        "', Apel2 = '" + apellido2 + "', Sexo = '" + sexo + "', Dirección = '" + direccion + "', Fechanac = '" + fechaNacimiento +
+                        "', Salario = " + salario + ", Numdept = " + numdep + ", NSSsup = '" + nsss + "' WHERE nif = '" + dni + "'";
+                int rA = consulta.executeUpdate(sqlupdate);
+                if(rA >0){
+                    System.out.println("Empleado Modificado Correctamente");
+                }else{
+                    System.out.println("Error al Modificar el empleado");
+                    }
+            
+                }
+            }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    public static void deletemp(Connection conexion){
+        sc = new Scanner(System.in);
+        try {
+            System.out.println("Eliminacion de empleados");
+            System.out.println("Ingrese el nif/dni del empleado que desea eliminar : ");
+            String dni = sc.nextLine();
+            Statement consulta = conexion.createStatement();
+            String sqld = "Select * from empleado where nif = " + "'"+ dni+ "'" +";";
+            ResultSet result = consulta.executeQuery(sqld);
+            if(result.next()){
+                String sqldel = "Delete from empleado where nif = '" + dni +"'";
+                int rA = consulta.executeUpdate(sqldel);
+                if(rA >0){
+                    System.out.println("Empleado Modificado Correctamente");
+                }else{
+                    System.out.println("Error al Modificar el empleado");
+                    }
+            }
         }
         catch (SQLException e){
             e.printStackTrace();
