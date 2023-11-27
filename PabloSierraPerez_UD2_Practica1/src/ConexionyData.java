@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class ConexionyData {
     static Scanner sc ;
-    public static void consultaemp(Connection conexion) {
+    public static void consultaEmp(Connection conexion) {
         try {
             Statement consulta = conexion.createStatement();
             String sql = "Select * from empleado";
@@ -39,7 +39,7 @@ public class ConexionyData {
             ex.printStackTrace();
         }
     }
-    public static void consultadni(Connection conexion) {
+    public static void consultaDni(Connection conexion) {
         try {
             sc = new Scanner(System.in);
             System.out.println("Escriba un DNI del empleado : ");
@@ -64,7 +64,7 @@ public class ConexionyData {
             ex.printStackTrace();
         }
     }
-    public static void consultass(Connection conexion) {
+    public static void consultaSalSup(Connection conexion) {
         try {
             sc = new Scanner(System.in);
             System.out.println("Escriba un salario : ");
@@ -89,7 +89,7 @@ public class ConexionyData {
             ex.printStackTrace();
         }
     }
-    public static void consultasif(Connection conexion) {
+    public static void consultaSalInf(Connection conexion) {
          try {
             sc = new Scanner(System.in);
             System.out.println("Escriba un salario : ");
@@ -114,7 +114,7 @@ public class ConexionyData {
             ex.printStackTrace();
         }
     }
-    public static void insertaremp(Connection conexcion){
+    public static void insertarEmp(Connection conexcion){
         sc = new Scanner(System.in);
         try{
             System.out.println("Insercion de empleado");
@@ -162,7 +162,7 @@ public class ConexionyData {
             e.printStackTrace();
         }
     } 
-    public static void modifemp(Connection conexion){
+    public static void modifEmp(Connection conexion){
         sc = new Scanner(System.in);
         try {
             System.out.println("Modificacion de empleados");
@@ -214,7 +214,7 @@ public class ConexionyData {
         }
         
     }
-    public static void deletemp(Connection conexion){
+    public static void deletEmp(Connection conexion){
         sc = new Scanner(System.in);
         try {
             System.out.println("Eliminacion de empleados");
@@ -227,14 +227,127 @@ public class ConexionyData {
                 String sqldel = "Delete from empleado where nif = '" + dni +"'";
                 int rA = consulta.executeUpdate(sqldel);
                 if(rA >0){
-                    System.out.println("Empleado Modificado Correctamente");
+                    System.out.println("Empleado Eliminado Correctamente");
                 }else{
-                    System.out.println("Error al Modificar el empleado");
+                    System.out.println("Error al Eliminar el empleado");
                     }
             }
         }
         catch (SQLException e){
             e.printStackTrace();
         }
+    }
+    public static void insertDep(Connection conexion) {
+        sc = new Scanner(System.in);
+        try {
+            System.out.println("Inserccion de Departamentos");
+            System.out.println("Ingrese el numero del departamento : ");
+            int numDep = sc.nextInt();
+            Statement consulta = conexion.createStatement();
+            String sql = "Select * from departamento where Numdep = '" + numDep +"'";
+            ResultSet result = consulta.executeQuery(sql);
+            if (!result.next()) {
+                sc = new Scanner(System.in);
+                System.out.println("Escriba nombre del departamento");
+                String nomDep = sc.nextLine();
+                System.out.println("Escriba numero de empleados del departamento");
+                int numEmp = sc.nextInt();
+                sc = new Scanner(System.in);
+                System.out.println("Escriba NSS del gerente del departamento");
+                String numSegSocGer = sc.nextLine();
+                System.out.println("Escriba Fecha de inicio del gerente del departamento");
+                String fechaIniGer = sc.nextLine();
+                java.sql.Date fechaInicGerente = java.sql.Date.valueOf(fechaIniGer);
+                String sqldep = "Insert into departamento values('" + numDep + "','" + nomDep +
+                        "','" +numEmp +"','" +numSegSocGer +"','" + fechaInicGerente +"');"; 
+                int rA = consulta.executeUpdate(sqldep);
+                if(rA >0){
+                    System.out.println("Departamento Insertado Correctamente");
+                }else{
+                    System.out.println("Error al insertar el departamento");
+                }
+            }else
+                System.out.println("El numero del departamento ya existe");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    public static void modifDep(Connection conexion){
+        sc = new Scanner(System.in);
+        try {
+            System.out.println("Inserccion de Departamentos");
+            System.out.println("Ingrese el numero del departamento : ");
+            int numDep = sc.nextInt();
+            Statement consulta = conexion.createStatement();
+            String sql = "Select * from departamento where Numdep = '" + numDep +"'";
+            ResultSet result = consulta.executeQuery(sql);
+            if (result.next()) {
+                sc = new Scanner(System.in);
+                System.out.println("Escriba nombre del departamento");
+                String nomDep = sc.nextLine();
+                System.out.println("Escriba numero de empleados del departamento");
+                int numEmp = sc.nextInt();
+                sc = new Scanner(System.in);
+                System.out.println("Escriba NSS del gerente del departamento");
+                String numSegSocGer = sc.nextLine();
+                System.out.println("Escriba Fecha de inicio del gerente del departamento");
+                String fechaIniGer = sc.nextLine();
+                java.sql.Date fechaInicGerente = java.sql.Date.valueOf(fechaIniGer);
+                String sqlupdate = "UPDATE departamento SET Nombredep = '" + nomDep + "', Numempdep = '" + numEmp + "', NSSgerente = '" + numSegSocGer +
+                        "', fechainicgerente = '" + fechaIniGer + "' WHERE Numdep = '" + numDep + "'";
+              int rA = consulta.executeUpdate(sqlupdate);
+                if(rA >0){
+                    System.out.println("Departamento Modificado Correctamente");
+                }else{
+                    System.out.println("Error al Modificar el departamento");
+                }
+            }else
+                System.out.println("El numero del departamento no existe");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void delDep(Connection conexion){
+        sc = new Scanner(System.in);
+        try {
+            System.out.println("Eliminacion de Departamentos");
+            System.out.println("Ingrese el numero del departamento");
+            int numDep = sc.nextInt();
+            Statement consulta = conexion.createStatement();
+            String sql = "Select * from departamento where Numdep = '" + numDep +"'";
+            ResultSet result = consulta.executeQuery(sql);
+            if (result.next()) {
+                String sqls = "Delete from departamento where Numdep = '" + numDep +"'";
+                int rA = consulta.executeUpdate(sqls);
+                if(rA >0){
+                    System.out.println("Departamento Eliminado Correctamente");
+                }else{
+                    System.out.println("Error al Eliminar el departamento");
+                    }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    } 
+    public static void listDep(Connection conexion) {
+        try {
+            Statement consulta = conexion.createStatement();
+            String sql = "Select * from departamento";
+            ResultSet rs = consulta.executeQuery(sql);
+            while (rs.next()){
+                System.out.println("Numero del departamento :" + rs.getString("Numdep"));
+                System.out.println("Nombre del departamento :" +  rs.getString("Nombredep"));
+                System.out.println("Numero de empleados del departamento :" + rs.getString("Numempdep"));
+                System.out.println("Numero seguridad social del gerente :" + rs.getString("NSSgerente"));
+                System.out.println("Fecha de inicio del gerente :" + rs.getString("fechainicgerente"));
+                System.out.println("-----------------------------------------------------");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+                
     }
 }

@@ -52,27 +52,27 @@ public class main {
                     opc2 = sc.nextInt();
                     switch (opc2) {
                         case 1:
-                            ConexionyData.insertaremp(conexion);
+                            ConexionyData.insertarEmp(conexion);
                             break;
                         case 2:
-                            ConexionyData.modifemp(conexion);
+                            ConexionyData.modifEmp(conexion);
                             break;
                         case 3:
-                            ConexionyData.deletemp(conexion);
+                            ConexionyData.deletEmp(conexion);
                             break;
                         case 4:
-                            ConexionyData.consultaemp(conexion);
+                            ConexionyData.consultaEmp(conexion);
                             break;
                         case 5:
                             break;
                         case 6:
-                            ConexionyData.consultadni(conexion);
+                            ConexionyData.consultaDni(conexion);
                             break;
                         case 7:
-                            ConexionyData.consultass(conexion);
+                            ConexionyData.consultaSalSup(conexion);
                             break;
                         case 8:
-                            ConexionyData.consultasif(conexion);
+                            ConexionyData.consultaSalInf(conexion);
                             break;
                         case 9:
                             system2 = false;
@@ -98,12 +98,16 @@ public class main {
                     opc3 = sc.nextInt();
                     switch (opc3) {
                         case 1:
+                            ConexionyData.insertDep(conexion);
                             break;
                         case 2:
+                            ConexionyData.modifDep(conexion);
                             break;
                         case 3:
+                            ConexionyData.delDep(conexion);
                             break;
                         case 4:
+                            ConexionyData.listDep(conexion);
                             break;
                         case 5:
                             boolean system4 = true;
