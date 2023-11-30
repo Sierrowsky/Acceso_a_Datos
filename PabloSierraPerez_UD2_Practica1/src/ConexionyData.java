@@ -16,7 +16,7 @@ import java.util.Scanner;
  * @author a21pablosp
  */
 public class ConexionyData {
-    static Scanner sc ;
+    static Scanner sc ;    
     public static void consultaEmp(Connection conexion) {
         try {
             Statement consulta = conexion.createStatement();
