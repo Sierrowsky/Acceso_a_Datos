@@ -1,0 +1,36 @@
+<hibernate-configuration>
+<session-factory>
+<!-- 
+      If you are using maven to build the project, 
+        put hibernate.cfg.xml in the src/main/resources directory so that when you build the war package, it will be automatically be placed in /WEB-INF/classes.
+
+      If not using maven, 
+        place the file directly in your WEB-INF/classes directory.
+       -->
+<!-- 
+    1, Conexión a la base de datos de configuración4Parámetros
+    hibernate.connection.driver_class, el controlador de la base de datos
+         hibernate_project_01 en la url es el nombre de la base de datos
+         El nombre de usuario y la contraseña son las cuentas para acceder a la base de datos.
+ -->
+<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/employees?zeroDateTimeBehavior=convertToNull</property>
+<property name="hibernate.connection.username">root</property>
+<property name="hibernate.connection.password">root</property>
+<!-- Connection Pool Size -->
+		<property name="hibernate.connection.pool_size">1</property>
+		
+		<!-- org.hibernate.HibernateException: No CurrentSessionContext configured! -->
+		<property name="hibernate.current_session_context_class">thread</property>
+		
+		<!-- Outputs the SQL queries, should be disabled in Production -->
+		<property name="hibernate.show_sql">true</property>
+		
+		<!-- Dialect is required to let Hibernate know the Database Type, MySQL, Oracle etc
+			Hibernate 4 automatically figure out Dialect from Database Connection Metadata -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property> 
+
+		<!-- mapping file, we can use Bean annotations too --> 
+		<mapping resource="employee.hbm.xml" />
+	</session-factory>
+</hibernate-configuration>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"https://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.mycompany.hibernatemaven.empleados" table="empleados">
+        <id name="emp_no" type="int">
+            <column name="emp_no" />
+            <generator class="increment" />
+        </id>
+        <property name="apellido" type="java.lang.String">
+            <column name="apellido" />
+        </property>
+        <property name="oficio" type="java.lang.String">
+            <column name="oficio" />
+        </property>
+        <property name="dir" type="int">
+            <column name="dir" />
+        </property>
+        <property name="fecha_alt" type="timestamp">
+            <column name="fecha_alt" />
+        </property>
+        <property name="salario" type="float">
+            <column name="salario" />
+        </property>
+        <property name="comision" type="float">
+            <column name="comision" />
+        </property>
+        <property name="dept_no" type="int">
+            <column name="dept_no" />
+        </property>
+        
+    </class>
+</hibernate-mapping>
