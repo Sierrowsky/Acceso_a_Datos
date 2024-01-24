@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="serif"
+        android:text="SPINNER 5 dinámico"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/et_dato"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduce un dato"/>
+
+    <Button
+        android:id="@+id/btn_dato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Añadir dato"/>
+
+    <Button
+        android:id="@+id/btn_mostrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mostrar"/>
+
+    <!-- elemento spinner dinamico -->
+    <Spinner
+        android:id="@+id/spDinamico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+</LinearLayout>

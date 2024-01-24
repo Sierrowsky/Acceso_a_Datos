@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00E2FF"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Listview 3"
+        android:gravity="center_horizontal"/>
+
+    <EditText
+        android:id="@+id/et_listview3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Introduce un planeta"/>
+
+    <ListView
+        android:id="@+id/lvPlanetas3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/planetas"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_listview3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickBtnListview3"
+        android:text="Add"/>
+
+
+</LinearLayout>

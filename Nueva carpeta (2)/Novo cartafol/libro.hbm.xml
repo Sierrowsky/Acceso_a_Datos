@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"https://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.journaldev.hibernate.model.Libro" table="LIBROS">
+        <id name="idLibro" type="int">
+            <column name="idLibro" />
+            <generator class="increment" />
+        </id>
+        <property name="titulo" type="java.lang.String">
+            <column name="titulo" />
+        </property>
+        <property name="precio" type="java.lang.String">
+            <column name="precio" />
+        </property>
+    </class>
+</hibernate-mapping>

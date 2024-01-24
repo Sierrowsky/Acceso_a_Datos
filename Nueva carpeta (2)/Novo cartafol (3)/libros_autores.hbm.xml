@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"https://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.journaldev.hibernate.model.LibrosAutores" table="libros_autores">
+        <id name="dniAutor" type="int">
+            <column name="DniAutor" />
+        </id>
+        <property name="idLibro" type="int">
+            <column name="idLibro" />
+        </property>
+    </class>
+</hibernate-mapping>
