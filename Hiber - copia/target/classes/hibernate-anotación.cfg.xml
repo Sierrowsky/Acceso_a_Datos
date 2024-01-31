@@ -13,7 +13,7 @@
 		<!-- org.hibernate.HibernateException: No CurrentSessionContext configured! -->
 		<property name="hibernate.current_session_context_class">thread</property>
 		
-		<!-- Mapping with model class containing annotations -->	
-                <mapping class="main.Libros"/>
+		<!-- Mapping with model class containing annotations -->
+		<mapping class="com.mycompany.hibernatemaven.empleados1"/>
 	</session-factory>
 </hibernate-configuration>

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package com.mycompany.mavenproject2;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "Libros",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"IdLibro"})})
-public class Libros {
+public class libros {
     @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "IdLibro",nullable = false,unique = true,length = 20)

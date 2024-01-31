@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"https://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.mycompany.hibernatemaven.empleados" table="autores">
+        <id name="dni_Autor" type="string">
+            <column name="Dni_Autor" />
+        </id>       
+        <property name="nombre" type="java.lang.String">
+            <column name="nombre" />
+        </property>
+        <property name="nacionalidad" type="java.lang.String">
+            <column name="nacionalidad" />
+        </property>       
+    </class>
+</hibernate-mapping>
