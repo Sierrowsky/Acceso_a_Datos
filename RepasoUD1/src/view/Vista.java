@@ -1,10 +1,10 @@
 package view;
 
-import model.Empleado;
-import controller.EmpleadoController;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import controller.EmpleadoController;
+import model.Empleado;
 
 public class Vista {
 

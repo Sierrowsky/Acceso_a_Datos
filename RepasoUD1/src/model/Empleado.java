@@ -1,7 +1,5 @@
 package model;
 
-
-
 public class Empleado {
 	private String nIF;
 	private String nombre;

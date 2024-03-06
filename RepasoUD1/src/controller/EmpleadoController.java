@@ -1,7 +1,4 @@
 package controller;
-
-
-import model.Empleado;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,7 +24,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
-import .Empleado;
+import model.Empleado;
 
 public class EmpleadoController {
 	private String path;
