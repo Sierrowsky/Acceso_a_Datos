@@ -128,6 +128,11 @@ public class JFrame extends javax.swing.JFrame {
 
         rbtgCategoria.add(rbtEmpresario);
         rbtEmpresario.setText("Empresario");
+        rbtEmpresario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtEmpresarioActionPerformed(evt);
+            }
+        });
 
         rbtgCategoria.add(rbtParticular);
         rbtParticular.setSelected(true);
@@ -139,6 +144,11 @@ public class JFrame extends javax.swing.JFrame {
         });
 
         cbHistorico.setText("Historico");
+        cbHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbHistoricoActionPerformed(evt);
+            }
+        });
 
         btnAlta.setText("Alta");
         btnAlta.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +160,11 @@ public class JFrame extends javax.swing.JFrame {
         btnModificar.setText("Modificar");
 
         btnBaja.setText("Baja");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBajaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -338,32 +353,17 @@ public class JFrame extends javax.swing.JFrame {
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
         // TODO add your handling code here:
-        String categoria = null;        
-        if (rbtEmpresario.isSelected()){
-            categoria = "Empresario";
-        }else if(rbtParticular.isSelected()){
-            categoria = "Particular";
-        }
-        String clientes []  = {txtNombre.getText(),txtApellidos.getText(),txtDireccion.getText()
-                ,txtFechaNacimiento.getText(),txtTelefono.getText(),txtEmail.getText(),categoria}; 
-        System.out.println(Arrays.toString(clientes));
-        try{
-            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);
-            
-            String query = "Insert into cliente (nombre,apellido,direccion,"
-                    + "fecha_nacimiento,telefono,email,categoria)Values"
-                    + "(?,?,?,?,?,?,?)";
-            PreparedStatement sentencia = conexion.prepareStatement(query);
-            sentencia.setString(1, txtNombre.getText());
-            sentencia.setString(2, txtApellidos.getText());
-            sentencia.setString(3, txtDireccion.getText());
-            sentencia.setString(4, txtFechaNacimiento.getText());
-            sentencia.setString(5, txtTelefono.getText());
-            sentencia.setString(6, txtEmail.getText());
-            sentencia.setString(7, categoria);
-            int valor  = sentencia.executeUpdate();
-            String queryShow = "SELECT id_cliente,categoria,nombre,direccion,"
+       insertarClientes();
+    }//GEN-LAST:event_btnAltaActionPerformed
+
+    private void cargarTablaClientes(){
+        try {
+            String queryShow = null ;
+            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);      
+                queryShow = "SELECT id_cliente,categoria,nombre,direccion,"
                     + "telefono,email,fecha_baja from cliente";
+            
+            
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery(queryShow);
             while(rs.next()){
@@ -381,16 +381,81 @@ public class JFrame extends javax.swing.JFrame {
                 //add string array data into jtable
                 tblModel.addRow(tbData);
             }
-                }
-        catch(SQLException e){
+        } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+   private void insertarClientes() {
+    try {
+        String categoria = null;
+        if (rbtEmpresario.isSelected()) {
+            categoria = "Empresario";
+        } else if (rbtParticular.isSelected()) {
+            categoria = "Particular";
+        }
+        String clientes[] = {txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
+                txtFechaNacimiento.getText(), txtTelefono.getText(), txtEmail.getText(), categoria};
+        Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);
 
+        String query = "INSERT INTO cliente (nombre, apellido, direccion, fecha_nacimiento, telefono, email, categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement sentencia = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        sentencia.setString(1, txtNombre.getText());
+        sentencia.setString(2, txtApellidos.getText());
+        sentencia.setString(3, txtDireccion.getText());
+        sentencia.setString(4, txtFechaNacimiento.getText());
+        sentencia.setString(5, txtTelefono.getText());
+        sentencia.setString(6, txtEmail.getText());
+        sentencia.setString(7, categoria);
+        int valor = sentencia.executeUpdate();
         
-    }//GEN-LAST:event_btnAltaActionPerformed
+        if (valor > 0) {
+            // If the insertion was successful, add the new client to the table
+            ResultSet generatedKeys = sentencia.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                String id = String.valueOf(generatedKeys.getLong(1));
+                String[] tbData = {id, categoria, txtNombre.getText(), txtDireccion.getText(),
+                        txtTelefono.getText(), txtEmail.getText(), null};
+                DefaultTableModel tblModel = (DefaultTableModel) tblCliente.getModel();
+                tblModel.addRow(tbData);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
     private void rbtParticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtParticularActionPerformed
         // TODO add your handling code here:
+        try {
+            DefaultTableModel tblModel= (DefaultTableModel)tblCliente.getModel();
+            tblModel.setRowCount(0);
+            String queryShow = null ;
+            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);      
+            if (rbtParticular.isEnabled()) {
+                queryShow = "SELECT id_cliente,categoria,nombre,direccion,"
+                    + "telefono,email,fecha_baja from cliente where categoria like 'Particular'";
+            }
+            
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(queryShow);
+            while(rs.next()){
+                //data will be added until finish
+                String id = String.valueOf(rs.getInt("id_cliente"));
+                String cat = rs.getString("categoria");
+                String nombre = rs.getString("nombre");
+                String direccion = rs.getString("direccion");
+                String telefono = rs.getString("telefono");
+                String email = rs.getString("email");
+                String fecha_baja = rs.getString("fecha_baja");
+                // string array for stroe data into jtable
+                String tbData[]={id,cat,nombre,direccion,telefono,email,fecha_baja};
+                
+                //add string array data into jtable
+                tblModel.addRow(tbData);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_rbtParticularActionPerformed
 
     private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
@@ -404,6 +469,79 @@ public class JFrame extends javax.swing.JFrame {
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
+
+    private void rbtEmpresarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtEmpresarioActionPerformed
+        // TODO add your handling code here:
+        try {
+            DefaultTableModel tblModel= (DefaultTableModel)tblCliente.getModel();
+            tblModel.setRowCount(0);
+            String queryShow = null ;
+            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);      
+            if(rbtEmpresario.isEnabled()){
+                queryShow = "SELECT id_cliente,categoria,nombre,direccion,"
+                    + "telefono,email,fecha_baja from cliente where categoria like 'Empresario'";
+            }
+            
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(queryShow);
+            while(rs.next()){
+                //data will be added until finish
+                String id = String.valueOf(rs.getInt("id_cliente"));
+                String cat = rs.getString("categoria");
+                String nombre = rs.getString("nombre");
+                String direccion = rs.getString("direccion");
+                String telefono = rs.getString("telefono");
+                String email = rs.getString("email");
+                String fecha_baja = rs.getString("fecha_baja");
+                // string array for stroe data into jtable
+                String tbData[]={id,cat,nombre,direccion,telefono,email,fecha_baja};
+                
+                //add string array data into jtable
+                tblModel.addRow(tbData);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_rbtEmpresarioActionPerformed
+
+    private void cbHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHistoricoActionPerformed
+        // TODO add your handling code here:
+        try {
+            DefaultTableModel tblModel= (DefaultTableModel)tblCliente.getModel();
+            tblModel.setRowCount(0);
+            String queryShow = null ;
+            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);      
+            
+                queryShow = "SELECT id_cliente,categoria,nombre,direccion,"
+                    + "telefono,email,fecha_baja from cliente where fecha_baja is not null";
+            
+            
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(queryShow);
+            while(rs.next()){
+                //data will be added until finish
+                String id = String.valueOf(rs.getInt("id_cliente"));
+                String cat = rs.getString("categoria");
+                String nombre = rs.getString("nombre");
+                String direccion = rs.getString("direccion");
+                String telefono = rs.getString("telefono");
+                String email = rs.getString("email");
+                String fecha_baja = rs.getString("fecha_baja");
+                // string array for stroe data into jtable
+                String tbData[]={id,cat,nombre,direccion,telefono,email,fecha_baja};
+                
+                //add string array data into jtable
+                tblModel.addRow(tbData);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_cbHistoricoActionPerformed
+
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnBajaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -435,8 +573,9 @@ public class JFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrame().setVisible(true);
-                
+                JFrame jFrame = new JFrame();
+                jFrame.setVisible(true);
+                jFrame.cargarTablaClientes();
             }
         });
     }

@@ -332,6 +332,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Empresario"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbtEmpresarioActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="rbtParticular">
                   <Properties>
@@ -349,6 +352,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Historico"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbHistoricoActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlta">
                   <Properties>
@@ -367,6 +373,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Baja"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBajaActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
