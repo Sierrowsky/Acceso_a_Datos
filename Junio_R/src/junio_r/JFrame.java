@@ -9,6 +9,7 @@ import java.util.Date;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import java.sql.*;
+import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -291,6 +292,12 @@ public class JFrame extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tblCliente.setShowGrid(true);
+        tblCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCliente);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -510,10 +517,14 @@ public class JFrame extends javax.swing.JFrame {
             DefaultTableModel tblModel= (DefaultTableModel)tblCliente.getModel();
             tblModel.setRowCount(0);
             String queryShow = null ;
-            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);      
-            
-                queryShow = "SELECT id_cliente,categoria,nombre,direccion,"
+            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);
+            if(cbHistorico.isSelected()){
+            queryShow = "SELECT id_cliente,categoria,nombre,direccion,"
                     + "telefono,email,fecha_baja from cliente where fecha_baja is not null";
+            }else{
+            queryShow = "SELECT id_cliente,categoria,nombre,direccion,"
+                    + "telefono,email,fecha_baja from cliente";  
+            }
             
             
             Statement st = conexion.createStatement();
@@ -543,6 +554,46 @@ public class JFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnBajaActionPerformed
 
+    private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tblModel = (DefaultTableModel) tblCliente.getModel();
+        int selectedRowIndex = tblCliente.getSelectedRow();
+
+        if (selectedRowIndex != -1) {
+            Vector rowData = tblModel.getDataVector().elementAt(tblCliente.convertRowIndexToModel(selectedRowIndex));
+            String[] data = new String[rowData.size()];
+            for (int i = 0; i < rowData.size(); i++) {
+                Object value = rowData.get(i);
+                data[i] = (value != null) ? value.toString() : "";
+            }
+            String id = data[0];
+            tablatexto(id);
+
+            
+            System.out.println(Arrays.toString(data));
+        } else {
+            
+        }
+    }//GEN-LAST:event_tblClienteMouseClicked
+
+    private void tablatexto(String id){
+        try{
+            String queryShow = null ;
+            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);                
+            queryShow = "SELECT * from cliente where id_cliente = ?";
+            PreparedStatement ps = conexion.prepareStatement(queryShow);
+            int id_cliente = Integer.parseInt(id);
+            ps.setInt(1, id_cliente);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                System.out.println(rs);
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+    }
     /**
      * @param args the command line arguments
      */
