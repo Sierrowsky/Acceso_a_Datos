@@ -556,6 +556,45 @@ public class JFrame extends javax.swing.JFrame {
 
     private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
         // TODO add your handling code here:
+        int selectedRowIndex = tblCliente.getSelectedRow();
+        if (selectedRowIndex != -1) {
+            try {
+                String selectedClientId = tblCliente.getValueAt(selectedRowIndex, 0).toString(); // Assuming client ID is in the first column
+                
+                // Query the database to get client information
+                Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);
+                String query = "SELECT * FROM cliente WHERE id_cliente = ?";
+                PreparedStatement ps = conexion.prepareStatement(query);
+                ps.setString(1, selectedClientId);
+                ResultSet rs = ps.executeQuery();
+                
+                // If a result is found, populate the text fields with the retrieved data
+                if (rs.next()) {
+                    txtCodigo.setText(rs.getString("id_cliente"));
+                    txtNombre.setText(rs.getString("nombre"));
+                    txtApellidos.setText(rs.getString("apellido"));
+                    txtDireccion.setText(rs.getString("direccion"));
+                    txtFechaNacimiento.setText(rs.getString("fecha_nacimiento"));
+                    txtTelefono.setText(rs.getString("telefono"));
+                    txtEmail.setText(rs.getString("email"));                    
+                    String categoria = rs.getString("categoria");
+                    if ("Empresario".equals(categoria)) {
+                        rbtEmpresario.setSelected(true);
+                        rbtParticular.setSelected(false);
+                    } else {
+                        rbtEmpresario.setSelected(false);
+                        rbtParticular.setSelected(true);
+                    }
+                }
+                
+                // Close resources
+                rs.close();
+                ps.close();
+                conexion.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        /*
         DefaultTableModel tblModel = (DefaultTableModel) tblCliente.getModel();
         int selectedRowIndex = tblCliente.getSelectedRow();
 
@@ -574,8 +613,9 @@ public class JFrame extends javax.swing.JFrame {
         } else {
             
         }
+        */
     }//GEN-LAST:event_tblClienteMouseClicked
-
+/*
     private void tablatexto(String id){
         try{
             String queryShow = null ;
@@ -591,7 +631,7 @@ public class JFrame extends javax.swing.JFrame {
 
         }catch(SQLException e){
             e.printStackTrace();
-        }
+        }*/
         
     }
     /**
