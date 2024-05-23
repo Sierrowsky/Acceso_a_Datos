@@ -9,8 +9,10 @@ import java.util.Date;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -71,6 +73,7 @@ public class JFrame extends javax.swing.JFrame {
         tblCliente = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        miLimpiar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
@@ -331,6 +334,15 @@ public class JFrame extends javax.swing.JFrame {
         tabClientes.addTab("Clientes", jPanel1);
 
         jMenu1.setText("File");
+
+        miLimpiar.setText("Limpiar Texto");
+        miLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miLimpiarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miLimpiar);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -433,36 +445,7 @@ public class JFrame extends javax.swing.JFrame {
 
     private void rbtParticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtParticularActionPerformed
         // TODO add your handling code here:
-        try {
-            DefaultTableModel tblModel= (DefaultTableModel)tblCliente.getModel();
-            tblModel.setRowCount(0);
-            String queryShow = null ;
-            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);      
-            if (rbtParticular.isEnabled()) {
-                queryShow = "SELECT id_cliente,categoria,nombre,direccion,"
-                    + "telefono,email,fecha_baja from cliente where categoria like 'Particular'";
-            }
-            
-            Statement st = conexion.createStatement();
-            ResultSet rs = st.executeQuery(queryShow);
-            while(rs.next()){
-                //data will be added until finish
-                String id = String.valueOf(rs.getInt("id_cliente"));
-                String cat = rs.getString("categoria");
-                String nombre = rs.getString("nombre");
-                String direccion = rs.getString("direccion");
-                String telefono = rs.getString("telefono");
-                String email = rs.getString("email");
-                String fecha_baja = rs.getString("fecha_baja");
-                // string array for stroe data into jtable
-                String tbData[]={id,cat,nombre,direccion,telefono,email,fecha_baja};
-                
-                //add string array data into jtable
-                tblModel.addRow(tbData);
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+       
     }//GEN-LAST:event_rbtParticularActionPerformed
 
     private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
@@ -479,36 +462,7 @@ public class JFrame extends javax.swing.JFrame {
 
     private void rbtEmpresarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtEmpresarioActionPerformed
         // TODO add your handling code here:
-        try {
-            DefaultTableModel tblModel= (DefaultTableModel)tblCliente.getModel();
-            tblModel.setRowCount(0);
-            String queryShow = null ;
-            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);      
-            if(rbtEmpresario.isEnabled()){
-                queryShow = "SELECT id_cliente,categoria,nombre,direccion,"
-                    + "telefono,email,fecha_baja from cliente where categoria like 'Empresario'";
-            }
-            
-            Statement st = conexion.createStatement();
-            ResultSet rs = st.executeQuery(queryShow);
-            while(rs.next()){
-                //data will be added until finish
-                String id = String.valueOf(rs.getInt("id_cliente"));
-                String cat = rs.getString("categoria");
-                String nombre = rs.getString("nombre");
-                String direccion = rs.getString("direccion");
-                String telefono = rs.getString("telefono");
-                String email = rs.getString("email");
-                String fecha_baja = rs.getString("fecha_baja");
-                // string array for stroe data into jtable
-                String tbData[]={id,cat,nombre,direccion,telefono,email,fecha_baja};
-                
-                //add string array data into jtable
-                tblModel.addRow(tbData);
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+     
     }//GEN-LAST:event_rbtEmpresarioActionPerformed
 
     private void cbHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHistoricoActionPerformed
@@ -551,7 +505,33 @@ public class JFrame extends javax.swing.JFrame {
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         // TODO add your handling code here:
-        
+        int selectedRow = tblCliente.getSelectedRow();
+        if (selectedRow != -1) {
+            try{
+                String idCliente = tblCliente.getValueAt(selectedRow, 0).toString(); 
+                SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+                Date hoy = new Date();
+                String fechaHoy = date.format(hoy);
+                tblCliente.getModel().setValueAt(fechaHoy, selectedRow, tblCliente.getColumnCount() - 1);
+                Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);
+                String query = "UPDATE cliente SET fecha_baja = ? WHERE id_cliente = ?";
+                PreparedStatement ps = conexion.prepareStatement(query);
+                ps.setString(1, fechaHoy);
+                ps.setString(2, idCliente);
+                int filas = ps.executeUpdate();
+                if (filas >0){
+                    System.out.println("Fino");
+                }else{
+                    System.out.println("Fallo");
+                }
+                ps.close();
+                conexion.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }            
+        }else {
+        System.out.println("Seleccione un cliente para dar de baja.");
+    }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
@@ -593,47 +573,20 @@ public class JFrame extends javax.swing.JFrame {
                 conexion.close();
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
-        /*
-        DefaultTableModel tblModel = (DefaultTableModel) tblCliente.getModel();
-        int selectedRowIndex = tblCliente.getSelectedRow();
-
-        if (selectedRowIndex != -1) {
-            Vector rowData = tblModel.getDataVector().elementAt(tblCliente.convertRowIndexToModel(selectedRowIndex));
-            String[] data = new String[rowData.size()];
-            for (int i = 0; i < rowData.size(); i++) {
-                Object value = rowData.get(i);
-                data[i] = (value != null) ? value.toString() : "";
-            }
-            String id = data[0];
-            tablatexto(id);
-
-            
-            System.out.println(Arrays.toString(data));
-        } else {
-            
+            }     
         }
-        */
     }//GEN-LAST:event_tblClienteMouseClicked
-/*
-    private void tablatexto(String id){
-        try{
-            String queryShow = null ;
-            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);                
-            queryShow = "SELECT * from cliente where id_cliente = ?";
-            PreparedStatement ps = conexion.prepareStatement(queryShow);
-            int id_cliente = Integer.parseInt(id);
-            ps.setInt(1, id_cliente);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                System.out.println(rs);
-            }
 
-        }catch(SQLException e){
-            e.printStackTrace();
-        }*/
+    private void miLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLimpiarActionPerformed
+        // TODO add your handling code here:
+         JTextField[] limpiar = {txtNombre, txtApellidos, txtCodigo, txtDireccion, txtEmail, txtFechaNacimiento, txtTelefono};
+        for(int i = 0; i < limpiar.length; i++) {
+            limpiar[i].setText("");
+        }
         
-    }
+    }//GEN-LAST:event_miLimpiarActionPerformed
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -693,6 +646,7 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
+    private javax.swing.JMenuItem miLimpiar;
     private javax.swing.JRadioButton rbtEmpresario;
     private javax.swing.JRadioButton rbtParticular;
     private javax.swing.ButtonGroup rbtgCategoria;
