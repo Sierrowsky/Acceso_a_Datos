@@ -86,8 +86,8 @@ public class JFrame extends javax.swing.JFrame {
         spStockProducto = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        modificarProducto = new javax.swing.JButton();
+        eliminarProducto = new javax.swing.JButton();
         precioProducto = new javax.swing.JTextField();
         nombreProducto = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
@@ -421,6 +421,11 @@ public class JFrame extends javax.swing.JFrame {
                 "Codigo", "Producto", "Precio", "Stock"
             }
         ));
+        tblProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductoMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblProducto);
 
         jLabel1.setText("Codigo Producto");
@@ -442,9 +447,19 @@ public class JFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Modificar");
+        modificarProducto.setText("Modificar");
+        modificarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarProductoActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Eliminar");
+        eliminarProducto.setText("Eliminar");
+        eliminarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarProductoActionPerformed(evt);
+            }
+        });
 
         precioProducto.setMaximumSize(new java.awt.Dimension(64, 22));
         precioProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -485,9 +500,9 @@ public class JFrame extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(modificarProducto)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(eliminarProducto)
                         .addGap(133, 133, 133)))
                 .addGap(130, 130, 130))
         );
@@ -510,8 +525,8 @@ public class JFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(modificarProducto)
+                    .addComponent(eliminarProducto))
                 .addGap(29, 29, 29))
         );
 
@@ -571,6 +586,7 @@ public class JFrame extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setEditable(false);
         jTextField1.setMinimumSize(new java.awt.Dimension(70, 20));
 
         jLabel11.setText("Codigo Venta");
@@ -578,6 +594,10 @@ public class JFrame extends javax.swing.JFrame {
         jLabel12.setText("Codigo Factura");
 
         jLabel13.setText("Producto");
+
+        jTextField3.setEditable(false);
+
+        jTextField4.setEditable(false);
 
         jLabel14.setText("Cantidad");
 
@@ -804,7 +824,6 @@ public class JFrame extends javax.swing.JFrame {
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery(queryShow);
             while(rs.next()){
-                //data will be added until finish
                 String id = String.valueOf(rs.getInt("id_cliente"));
                 String cat = rs.getString("categoria");
                 String nombre = rs.getString("nombre");
@@ -812,10 +831,8 @@ public class JFrame extends javax.swing.JFrame {
                 String telefono = rs.getString("telefono");
                 String email = rs.getString("email");
                 String fecha_baja = rs.getString("fecha_baja");
-                // string array for stroe data into jtable
                 String tbData[]={id,cat,nombre,direccion,telefono,email,fecha_baja};
                 DefaultTableModel tblModel= (DefaultTableModel)tblCliente.getModel();
-                //add string array data into jtable
                 tblModel.addRow(tbData);
             }
         } catch (SQLException e){
@@ -849,7 +866,6 @@ public class JFrame extends javax.swing.JFrame {
              int valor = sentencia.executeUpdate();
 
              if (valor > 0) {
-                 // If the insertion was successful, add the new client to the table
                  ResultSet generatedKeys = sentencia.getGeneratedKeys();
                  if (generatedKeys.next()) {
                      String id = String.valueOf(generatedKeys.getLong(1));
@@ -907,7 +923,6 @@ public class JFrame extends javax.swing.JFrame {
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery(queryShow);
             while(rs.next()){
-                //data will be added until finish
                 String id = String.valueOf(rs.getInt("id_cliente"));
                 String cat = rs.getString("categoria");
                 String nombre = rs.getString("nombre");
@@ -915,10 +930,8 @@ public class JFrame extends javax.swing.JFrame {
                 String telefono = rs.getString("telefono");
                 String email = rs.getString("email");
                 String fecha_baja = rs.getString("fecha_baja");
-                // string array for stroe data into jtable
                 String tbData[]={id,cat,nombre,direccion,telefono,email,fecha_baja};
                 
-                //add string array data into jtable
                 tblModel.addRow(tbData);
             }
         } catch (SQLException e){
@@ -962,16 +975,14 @@ public class JFrame extends javax.swing.JFrame {
         int selectedRowIndex = tblCliente.getSelectedRow();
         if (selectedRowIndex != -1) {
             try {
-                String selectedClientId = tblCliente.getValueAt(selectedRowIndex, 0).toString(); // Assuming client ID is in the first column
+                String selectedClientId = tblCliente.getValueAt(selectedRowIndex, 0).toString();
                 
-                // Query the database to get client information
                 Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);
                 String query = "SELECT * FROM cliente WHERE id_cliente = ?";
                 PreparedStatement ps = conexion.prepareStatement(query);
                 ps.setString(1, selectedClientId);
                 ResultSet rs = ps.executeQuery();
                 
-                // If a result is found, populate the text fields with the retrieved data
                 if (rs.next()) {
                     txtCodigo.setText(rs.getString("id_cliente"));
                     txtNombre.setText(rs.getString("nombre"));
@@ -990,7 +1001,6 @@ public class JFrame extends javax.swing.JFrame {
                     }
                 }
                 
-                // Close resources
                 rs.close();
                 ps.close();
                 conexion.close();
@@ -1035,7 +1045,68 @@ public class JFrame extends javax.swing.JFrame {
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
-    
+
+    private void eliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarProductoActionPerformed
+        // TODO add your handling code here:
+        borrarProducto();
+        limpiarProducto();
+        cargarTablaProducto();
+    }//GEN-LAST:event_eliminarProductoActionPerformed
+
+    private void tblProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductoMouseClicked
+        // TODO add your handling code here:
+        int selectedRowIndex = tblProducto.getSelectedRow();
+        if (selectedRowIndex != -1) {
+            try {
+                String selectedProductoId = tblProducto.getValueAt(selectedRowIndex, 0).toString();
+                
+                Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);
+                String query = "SELECT * FROM producto WHERE id_producto = ?";
+                PreparedStatement ps = conexion.prepareStatement(query);
+                ps.setString(1, selectedProductoId);
+                ResultSet rs = ps.executeQuery();
+                
+                if (rs.next()) {
+                    codigoProducto.setText(rs.getString("id_producto"));
+                    precioProducto.setText(rs.getString("nombre"));
+                    nombreProducto.setText(rs.getString("precio"));
+                    spStockProducto.setValue(rs.getInt("stock"));
+                }
+                
+                rs.close();
+                ps.close();
+                conexion.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }     
+        }
+    }//GEN-LAST:event_tblProductoMouseClicked
+
+    private void modificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modificarProductoActionPerformed
+    private void limpiarProducto(){
+        DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
+        modelo.setRowCount(0);
+    }
+    private void borrarProducto() {
+        if (codigoProducto.getText().isEmpty()) {
+            advertencia.show();
+        }else{
+            try{
+                Connection conexion = DriverManager.getConnection(DB_URL,Usuario,Password);
+                String query="DELETE FROM producto WHERE id_producto = ?";
+                PreparedStatement sentencia = conexion.prepareStatement(query);
+                sentencia.setString(1, codigoProducto.getText());
+                sentencia.execute();
+                tblProducto.removeAll();
+                
+            }catch(SQLException e){
+                e.printStackTrace(); 
+            }
+        }
+        
+    }
     private void insertProductos(){
         if (nombreProducto.getText().equalsIgnoreCase("")||precioProducto.getText().equalsIgnoreCase("")||String.valueOf(spStockProducto.getValue()).equalsIgnoreCase("")) {
             advertencia.show();
@@ -1078,15 +1149,12 @@ public class JFrame extends javax.swing.JFrame {
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery(queryShow);
             while(rs.next()){
-                //data will be added until finish
                 String id = String.valueOf(rs.getInt("id_producto"));
                 String nombre = rs.getString("nombre");
                 String precio = rs.getString("precio");
                 String stock = rs.getString("stock");
-                // string array for stroe data into jtable
                 String tbData[]={id,nombre,precio,stock};
                 DefaultTableModel tblModel= (DefaultTableModel)tblProducto.getModel();
-                //add string array data into jtable
                 tblModel.addRow(tbData);
             }
         } catch (SQLException e){
@@ -1141,9 +1209,8 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnOK;
     private javax.swing.JCheckBox cbHistorico;
     private javax.swing.JTextField codigoProducto;
+    private javax.swing.JButton eliminarProducto;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -1200,6 +1267,7 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JMenuItem miLimpiar;
+    private javax.swing.JButton modificarProducto;
     private javax.swing.JTextField nombreProducto;
     private javax.swing.JTextField precioProducto;
     private javax.swing.JRadioButton rbtEmpresario;
@@ -1217,4 +1285,6 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+
+    
 }
