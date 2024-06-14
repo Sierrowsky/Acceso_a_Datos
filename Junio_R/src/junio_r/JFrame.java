@@ -63,7 +63,6 @@ public class JFrame extends javax.swing.JFrame {
         lblEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         txtFechaNacimiento = new javax.swing.JTextField();
-        btnCalendar = new javax.swing.JButton();
         lblFecha = new javax.swing.JLabel();
         txtApellidos = new javax.swing.JTextField();
         lblApellidos = new javax.swing.JLabel();
@@ -198,16 +197,6 @@ public class JFrame extends javax.swing.JFrame {
             }
         });
 
-        btnCalendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/junio_r/planner_application_calendar_3059.png"))); // NOI18N
-        btnCalendar.setMaximumSize(new java.awt.Dimension(50, 50));
-        btnCalendar.setMinimumSize(new java.awt.Dimension(50, 50));
-        btnCalendar.setPreferredSize(new java.awt.Dimension(50, 50));
-        btnCalendar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalendarActionPerformed(evt);
-            }
-        });
-
         lblFecha.setText("Fecha Nacimiento");
 
         lblApellidos.setText("Apellidos");
@@ -314,9 +303,7 @@ public class JFrame extends javax.swing.JFrame {
                         .addComponent(lblFecha)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64))))
+                        .addGap(110, 110, 110))))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtFechaNacimiento, txtNombre});
@@ -331,23 +318,17 @@ public class JFrame extends javax.swing.JFrame {
                     .addComponent(lblCategoria)
                     .addComponent(rbtEmpresario)
                     .addComponent(rbtParticular))
+                .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblNombre)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblApellidos)
-                                .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblFecha)
-                                .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(36, 36, 36))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNombre)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblApellidos)
+                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblFecha)
+                        .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDireccion)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -384,6 +365,8 @@ public class JFrame extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tblCliente.setColumnSelectionAllowed(false);
+        tblCliente.setRowSelectionAllowed(true);
         tblCliente.setShowGrid(true);
         tblCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -957,10 +940,6 @@ public class JFrame extends javax.swing.JFrame {
        txtApellidos.setEditable(true);
     }//GEN-LAST:event_rbtParticularActionPerformed
 
-    private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCalendarActionPerformed
-
     private void txtFechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNacimientoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaNacimientoActionPerformed
@@ -1211,25 +1190,29 @@ public class JFrame extends javax.swing.JFrame {
         cargarComboboxProductos();
     }//GEN-LAST:event_modificarProductoActionPerformed
     private void moodificarProducto() {
-        try {
-            Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);
+        if (nombreProducto.getText().equalsIgnoreCase("") || precioProducto.getText().equalsIgnoreCase("") || String.valueOf(spStockProducto.getValue()).equalsIgnoreCase("")) {
+        advertencia.show();
+        } else {
+                try {
+                    Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password);
 
-            String query = "UPDATE producto SET nombre=?, precio=?, stock=? WHERE id_producto=?";
-            PreparedStatement sentencia = conexion.prepareStatement(query);
-            sentencia.setString(1, nombreProducto.getText());
+                    String query = "UPDATE producto SET nombre=?, precio=?, stock=? WHERE id_producto=?";
+                    PreparedStatement sentencia = conexion.prepareStatement(query);
+                    sentencia.setString(1, nombreProducto.getText());
 
-            String precio = precioProducto.getText().replace(",", ".");
-            sentencia.setString(2, precio);
+                    String precio = precioProducto.getText().replace(",", ".");
+                    sentencia.setString(2, precio);
 
-            sentencia.setString(3, String.valueOf(spStockProducto.getValue()));
-            sentencia.setString(4, codigoProducto.getText());
-            int valor = sentencia.executeUpdate();
+                    sentencia.setString(3, String.valueOf(spStockProducto.getValue()));
+                    sentencia.setString(4, codigoProducto.getText());
+                    int valor = sentencia.executeUpdate();
 
-            if (valor > 0) {
-                actualizarLineasVenta(codigoProducto.getText(), precio);
+                    if (valor > 0) {
+                        actualizarLineasVenta(codigoProducto.getText(), precio);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -1327,19 +1310,97 @@ public class JFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         agregarLinea();
     }//GEN-LAST:event_agregarLineaActionPerformed
+    private void agregarLinea() {
+        if (codigoFactura2.getText().equalsIgnoreCase("") ||
+            String.valueOf(spCantidadVenta.getValue()).equals("") ||
+            cbClientes.getSelectedItem().equals("")) {
+            advertencia.show();
+        } else {
+            try {
+                String idProducto = cbProductos.getSelectedItem().toString().split(". ")[0];
+                double precioproducto = precio(idProducto);             
 
+                try (Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password)) {
+                    String query = "INSERT INTO venta (idFactura, idProducto, cantidad, precio) VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement ps = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+                        ps.setString(1, codigoFactura2.getText());
+                        ps.setString(2, idProducto);
+                        ps.setInt(3, (int) spCantidadVenta.getValue());
+                        ps.setDouble(4, precioproducto);
+
+                        int valor = ps.executeUpdate();
+                        if (valor > 0) {
+                            try (ResultSet rs = ps.getGeneratedKeys()) {
+                                if (rs.next()) {
+                                    String id = String.valueOf(rs.getLong(1));
+                                    double preciototal = precioproducto * (int) spCantidadVenta.getValue();
+                                    String[] tbData = {
+                                        id,
+                                        codigoFactura2.getText(),
+                                        cbProductos.getSelectedItem().toString(),
+                                        String.valueOf(spCantidadVenta.getValue()),
+                                        String.valueOf(precioproducto),
+                                        String.valueOf(preciototal)
+                                    };
+                                    DefaultTableModel tblModel = (DefaultTableModel) tablaLineaVenta.getModel();
+                                    tblModel.addRow(tbData);
+                                }
+                            }
+                        }
+                    }
+                }
+                cargarLineasVenta(codigoFactura2.getText());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     private void modificarLineaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarLineaActionPerformed
         // TODO add your handling code here:
-        
+        modificarLineaVentas();
+        limpiartablaLinea();
+        cargarLineasVenta(codigoFactura.getText());
     }//GEN-LAST:event_modificarLineaActionPerformed
-
+    private void modificarLineaVentas(){
+        if (codigoFactura2.getText().equalsIgnoreCase("") ||
+            String.valueOf(spCantidadVenta.getValue()).equals("") ||
+            cbClientes.getSelectedItem().equals("")) {
+                advertencia.show();
+        } else {
+            try {
+                String idProductoNuevo = cbProductos.getSelectedItem().toString().split(". ")[0];
+                double precioProductoNuevo = precio(idProductoNuevo);             
+                int cantidad = (int) spCantidadVenta.getValue();
+                
+                try (Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password)) {
+                String query = "UPDATE venta SET idProducto=?, cantidad=?, precio=? WHERE idVenta=?";
+                PreparedStatement ps = conexion.prepareStatement(query);
+                    ps.setString(1, idProductoNuevo);
+                    ps.setInt(2, cantidad);
+                    ps.setDouble(3, precioProductoNuevo);
+                    ps.setString(4, codigoLineaVenta.getText());
+                    int valor = ps.executeUpdate();
+                    if (valor > 0) {
+                        
+                        }
+                    
+                }
+                cargarLineasVenta(codigoFactura2.getText());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     private void EliminarLineaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarLineaActionPerformed
         // TODO add your handling code here:
         eliminarlinea();
         limpiartablaLinea();
         cargarLineasVenta(codigoFactura2.getText());
     }//GEN-LAST:event_EliminarLineaActionPerformed
-
+    private void limpiartablaLinea(){
+        DefaultTableModel modelo=(DefaultTableModel) tablaLineaVenta.getModel();
+        modelo.setRowCount(0);
+    }
     private void tablaLineaVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaLineaVentaMouseClicked
         // TODO add your handling code here:
         int selectedRowIndex = tablaLineaVenta.getSelectedRow();
@@ -1482,10 +1543,7 @@ public class JFrame extends javax.swing.JFrame {
         }
     }
     
-    private void limpiartablaLinea(){
-        DefaultTableModel modelo=(DefaultTableModel) tablaLineaVenta.getModel();
-        modelo.setRowCount(0);
-    }
+    
     private void limpiartabProducto(){
         DefaultTableModel modelo=(DefaultTableModel) tblProducto.getModel();
         modelo.setRowCount(0);
@@ -1525,51 +1583,7 @@ public class JFrame extends javax.swing.JFrame {
         }
         
     }
-    private void agregarLinea() {
-        if (codigoFactura2.getText().equalsIgnoreCase("") ||
-            String.valueOf(spCantidadVenta.getValue()).equals("") ||
-            cbClientes.getSelectedItem().equals("")) {
-            advertencia.show();
-        } else {
-            try {
-                String idProducto = cbProductos.getSelectedItem().toString().split(". ")[0];
-                double precioproducto = precio(idProducto);             
-
-                try (Connection conexion = DriverManager.getConnection(DB_URL, Usuario, Password)) {
-                    String query = "INSERT INTO venta (idFactura, idProducto, cantidad, precio) VALUES (?, ?, ?, ?)";
-                    try (PreparedStatement ps = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-                        ps.setString(1, codigoFactura2.getText());
-                        ps.setString(2, idProducto);
-                        ps.setInt(3, (int) spCantidadVenta.getValue());
-                        ps.setDouble(4, precioproducto);
-
-                        int valor = ps.executeUpdate();
-                        if (valor > 0) {
-                            try (ResultSet rs = ps.getGeneratedKeys()) {
-                                if (rs.next()) {
-                                    String id = String.valueOf(rs.getLong(1));
-                                    double preciototal = precioproducto * (int) spCantidadVenta.getValue();
-                                    String[] tbData = {
-                                        id,
-                                        codigoFactura2.getText(),
-                                        cbProductos.getSelectedItem().toString(),
-                                        String.valueOf(spCantidadVenta.getValue()),
-                                        String.valueOf(precioproducto),
-                                        String.valueOf(preciototal)
-                                    };
-                                    DefaultTableModel tblModel = (DefaultTableModel) tablaLineaVenta.getModel();
-                                    tblModel.addRow(tbData);
-                                }
-                            }
-                        }
-                    }
-                }
-                cargarLineasVenta(codigoFactura2.getText());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    
         private double precio(String idProducto) {
         double precioproducto = -1;
         String query = "SELECT precio FROM producto WHERE id_producto = ?";
@@ -1752,7 +1766,6 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JButton agregarLinea;
     private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnBaja;
-    private javax.swing.JButton btnCalendar;
     private javax.swing.JButton btnCrearFactura;
     private javax.swing.JButton btnOK;
     private javax.swing.JComboBox<String> cbClientes;
